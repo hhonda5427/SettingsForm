@@ -149,8 +149,7 @@ class CalculatorApp(QMainWindow):
                 elif key == "color":
                     item = QTableWidgetItem(",".join(str(x) for x in value))
                     self.tableWidget.setItem(i,j,item)
-                    color = QColor(value[0], value[1], value[2])
-                    self.tableWidget.item(i, j).setBackground(color)
+                    self.tableWidget.item(i, j).setBackground(QColor(*value))
                     self.tableWidget.item(i, j).setToolTip(self.get_tooltip_text(key))
                 elif key == "searchStr":
                     item = QTableWidgetItem(",".join(str(x) for x in value))
