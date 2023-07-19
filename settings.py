@@ -8,7 +8,7 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt
 
 
-class CalculatorApp(QMainWindow):
+class SettingsFormApp(QMainWindow):
     def __init__(self):
         super().__init__()
 
@@ -43,11 +43,16 @@ class CalculatorApp(QMainWindow):
         # self.tableWidget.setSelectionMode(QAbstractItemView.NoSelection)
 
          # テーブルのセルを選択したときに編集可能にする
-        self.tableWidget.setEditTriggers(QAbstractItemView.DoubleClicked)
+        # self.tableWidget.setEditTriggers(QAbstractItemView.DoubleClicked)
+        self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tableWidget.itemSelectionChanged.connect(self.on_selection_changed)
         # cellDoubleClickedシグナルにスロットを接続
         self.tableWidget.cellDoubleClicked.connect(self.onCellDoubleClicked)
+        # セルの値が変更された後に発生、
+        # self.tableWidget.itemChanged.connect(self.on_cell_value_changed)
+        # self.tableWidget.cellChanged.connect(self.on_cell_value_changed)
+
 
         self.radio_button1 = QRadioButton("Modalities", self)
         self.radio_button1.setGeometry(20, 20, 100, 20)
@@ -131,9 +136,7 @@ class CalculatorApp(QMainWindow):
 
                 if key == "status":
                     cell_widget = QComboBox()
-                    cell_widget.addItem("日勤")
-                    cell_widget.addItem("夜勤")
-                    cell_widget.addItem("休診日日勤")
+                    cell_widget.addItems(["日勤","夜勤","休診日日勤"])
                     cell_widget.setCurrentText(value)
                     cell_widget.setEditable(True)
                     cell_widget.setLineEdit(cell_widget.lineEdit())
@@ -141,8 +144,7 @@ class CalculatorApp(QMainWindow):
                     cell_widget.setToolTip(self.get_tooltip_text(key))
                 elif key == "target":
                     cell_widget = QComboBox()
-                    cell_widget.addItem("True")
-                    cell_widget.addItem("False")
+                    cell_widget.addItems(["True","False"])
                     cell_widget.setCurrentText(str(value))
                     self.tableWidget.setCellWidget(i, j, cell_widget)
                     cell_widget.setToolTip(self.get_tooltip_text(key))
@@ -162,6 +164,7 @@ class CalculatorApp(QMainWindow):
                 
 
         self.tableWidget.setCurrentCell(-1, -1)
+
         self.disableCellValueChangedEvent = False
 
     def get_tooltip_text(self, column_name):
@@ -173,7 +176,7 @@ class CalculatorApp(QMainWindow):
         elif column_name == "databasename":
             tooltip_text = "アクセスデータベースを検索する文字列を記載してください。\n間違うとプログラムがうまく起動できないので正確に入力してください。"
         elif column_name == "order":
-            tooltip_text = "表示順を設定します。\n上下ボタンで設定します。"
+            tooltip_text = "表示順を設定します。\n直接編集はできません。\n上下ボタンで設定します。"
         elif column_name == "target":
             tooltip_text = "勤務の対象とするか判別する設定です。\nTrueにするとモダリティ設定に反映される勤務となります。"
         elif column_name == "color":
@@ -217,22 +220,20 @@ class CalculatorApp(QMainWindow):
         cell = self.tableWidget.item(row, col)
 
         if column_name == "color":
-
             self.on_color_change(cell)
+        elif column_name != "order":
+            self.tableWidget.editItem(cell)
 
-        # if not column_name in ["order"]:
-        #     editcell = self.tableWidget.item(row, col)
-        #     # self.tableWidget.item(row, col).setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsEditable)
-        #     self.lock_cells()
 
     def lock_cells(self):
         for row in range(self.tableWidget.rowCount()):
             for col in range(self.tableWidget.columnCount()):
                 cell = self.tableWidget.item(row, col)
-                if cell == self.editCell:
-                    cell.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsEditable)
-                else:
-                    cell.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
+                cell.setFlags(cell.flags() & ~Qt.ItemIsEditable)
+                # if cell == self.editCell:
+                #     cell.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsEditable)
+                # else:
+                #     cell.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
 
     def save_changes_to_json_file(self):
         json_file_path = "settings.json"
@@ -431,6 +432,6 @@ class CalculatorApp(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = CalculatorApp()
+    window = SettingsFormApp()
     window.show()
     sys.exit(app.exec_())
