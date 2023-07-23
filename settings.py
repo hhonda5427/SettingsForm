@@ -2,11 +2,28 @@ import sys
 import os
 import json
 import re
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QHeaderView, QAbstractItemView, \
-    QComboBox, QColorDialog, QToolTip, QTableWidget, QRadioButton, QLabel, QPushButton, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, \
+                            QHeaderView, QAbstractItemView, QComboBox, \
+                            QColorDialog, QToolTip, QTableWidget, QRadioButton, \
+                            QLabel, QPushButton, QMessageBox, QStyledItemDelegate, \
+                            QLineEdit, QMessageBox
 from PyQt5.QtGui import QColor
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 
+class EditingFinishedDelegate(QStyledItemDelegate):
+    editingFinished = pyqtSignal(int, int)
+
+    def createEditor(self, parent, option, index):
+        editor = QLineEdit(parent)
+        editor.editingFinished.connect(self.emitEditingFinished)  # QLineEditのeditingFinishedシグナルを接続
+        return editor
+
+    def emitEditingFinished(self):
+        editor = self.sender()  # 送信元のエディタを取得
+        if isinstance(editor, QLineEdit):
+            index = self.parent().tableWidget.indexAt(editor.pos())  # エディタの位置からセルのインデックスを取得
+            row, column = index.row(), index.column()
+            self.editingFinished.emit(row, column)  # 行と列の情報を含むシグナルを発行
 
 class SettingsFormApp(QMainWindow):
     def __init__(self):
@@ -31,6 +48,10 @@ class SettingsFormApp(QMainWindow):
         self.disableCellValueChangedEvent = True
 
         self.init_ui()
+
+        self.delegate = EditingFinishedDelegate(self)
+        self.delegate.editingFinished.connect(self.on_cell_value_changed)
+        self.tableWidget.setItemDelegate(self.delegate)
 
     def init_ui(self):
         self.setWindowTitle("Setting Form")
@@ -96,7 +117,8 @@ class SettingsFormApp(QMainWindow):
         self.button4.clicked.connect(self.on_remove_item_clicked)
 
         self.load_data_from_json()
-        self.set_table_view(self.modalities)
+        self.currentData = self.modalities
+        self.set_table_view(self.currentData)
 
     def load_data_from_json(self):
 
@@ -124,7 +146,7 @@ class SettingsFormApp(QMainWindow):
             return
 
         columns = list(data[0].keys())
-
+        print(columns)
         self.tableWidget.setColumnCount(len(columns))
         self.tableWidget.setHorizontalHeaderLabels(columns)
 
@@ -142,12 +164,16 @@ class SettingsFormApp(QMainWindow):
                     cell_widget.setLineEdit(cell_widget.lineEdit())
                     self.tableWidget.setCellWidget(i, j, cell_widget)
                     cell_widget.setToolTip(self.get_tooltip_text(key))
+                    cell_widget.currentIndexChanged.connect(lambda idx, r=i, c=j: self.on_cell_value_changed(r,c))
+                    
                 elif key == "target":
                     cell_widget = QComboBox()
                     cell_widget.addItems(["True","False"])
                     cell_widget.setCurrentText(str(value))
                     self.tableWidget.setCellWidget(i, j, cell_widget)
                     cell_widget.setToolTip(self.get_tooltip_text(key))
+                    cell_widget.currentIndexChanged.connect(lambda idx, r=i, c=j: self.on_cell_value_changed(r,c))
+
                 elif key == "color":
                     item = QTableWidgetItem(",".join(str(x) for x in value))
                     self.tableWidget.setItem(i,j,item)
@@ -189,15 +215,21 @@ class SettingsFormApp(QMainWindow):
 
     def on_radio_button_clicked(self):
         if self.radio_button1.isChecked():
-            self.set_table_view(self.modalities)
+            self.currentData = self.modalities
+
         elif self.radio_button2.isChecked():
-            self.set_table_view(self.shifts)
+            self.currentData = self.shifts
+
         elif self.radio_button3.isChecked():
-            self.set_table_view(self.workCountHeaders)
+            self.currentData = self.workCountHeaders
+
         elif self.radio_button4.isChecked():
-            self.set_table_view(self.modalityConfigHeaders)
+            self.currentData = self.modalityConfigHeaders
+
         elif self.radio_button5.isChecked():
-            self.set_table_view(self.skills)
+            self.currentData = self.skills
+
+        self.set_table_view(self.currentData)
 
     def on_selection_changed(self):
         selected_indexes = self.tableWidget.selectedIndexes()
@@ -221,6 +253,7 @@ class SettingsFormApp(QMainWindow):
 
         if column_name == "color":
             self.on_color_change(cell)
+
         elif column_name != "order":
             self.tableWidget.editItem(cell)
 
@@ -237,7 +270,7 @@ class SettingsFormApp(QMainWindow):
 
     def save_changes_to_json_file(self):
         json_file_path = "settings.json"
-
+        print("save")
         updated_data = {
             "Modalities": self.modalities,
             "Shifts": self.shifts,
@@ -341,34 +374,81 @@ class SettingsFormApp(QMainWindow):
 
     def on_cell_value_changed(self, row, column):
         if not self.disableCellValueChangedEvent:
+
             column_name = self.tableWidget.horizontalHeaderItem(column).text()
             cell = self.tableWidget.item(row, column)
+            flg = False
 
             if column_name == "order":
-                self.set_object_data()
+                if cell.text().isdigit():
+                    flg = (int(cell.text()) == row + 1)
 
             elif column_name == "name":
-                self.validate_string(cell)
+                flg = self.validate_string(cell)
 
             elif column_name == "databasename":
-                self.validate_database_name(cell)
+                flg = self.validate_database_name(cell)
 
             elif column_name == "color":
-                self.validate_color(cell)
+                flg = self.validate_color(cell)
 
             elif column_name == "searchStr":
-                self.validate_search_str(cell)
-
+                flg = self.validate_search_str(cell)
+                
             elif column_name == "target":
-                value = cell.text()
-                if value.lower() in ["true", "false"]:
-                    self.set_object_data()
+                cell_widget = self.tableWidget.cellWidget(row,column)
+                flg = self.validate_target(cell_widget, row, column)
 
             elif column_name == "status":
                 cell_widget = self.tableWidget.cellWidget(row, column)
-                value = cell_widget.currentText()
-                if value in ["日勤", "夜勤", "休診日日勤"]:
-                    self.set_object_data()
+                flg = self.validate_status(cell_widget, row, column)
+
+            if flg:
+                self.set_currentData(row)
+
+    def set_currentData(self, row):
+        col_count = self.tableWidget.columnCount()
+
+        for col in range(col_count):
+            column_name = self.tableWidget.horizontalHeaderItem(col).text()
+            if column_name == "order":
+                self.currentData[row][column_name] = int(self.tableWidget.item(row, col).text())
+            elif column_name == "color":
+                color_str = self.tableWidget.item(row,col).text()
+                color = [int(c) for c in color_str.split(',')]
+                self.currentData[row][column_name] = color
+            elif column_name == "searchStr":
+                self.currentData[row][column_name] = self.tableWidget.item(row,col).text().split(',')
+            elif column_name == "target":
+                value = self.tableWidget.cellWidget(row, col).currentText()
+                self.currentData[row][column_name] = bool(value)
+            elif column_name == "status":
+                self.currentData[row][column_name] = self.tableWidget.cellWidget(row, col).currentText()
+            else:
+                self.currentData[row][column_name] = self.tableWidget.item(row, col).text()
+
+        self.convet_currentData_to_origin()
+
+
+    def convet_currentData_to_origin(self):
+        print("convert_currentData2orign")
+        if self.radio_button1.isChecked():
+            self.modalities = self.currentData 
+            print(self.modalities)
+        elif self.radio_button2.isChecked():
+            self.shifts = self.currentData
+            print(self.shifts)
+        elif self.radio_button3.isChecked():
+            self.workCountHeaders = self.currentData
+            print(self.workCountHeaders)
+        elif self.radio_button4.isChecked():
+            self.modalityConfigHeaders = self.currentData
+            print(self.modalityConfigHeaders)
+        elif self.radio_button5.isChecked():
+            self.skills = self.currentData 
+            print(self.skills)
+        # self.save_changes_to_json_file()
+
 
     def set_object_data(self):
         row_count = self.tableWidget.rowCount()
@@ -402,7 +482,7 @@ class SettingsFormApp(QMainWindow):
         for i in range(self.tableWidget.rowCount()):
             if target_str == self.tableWidget.item(i, cell.column()).text():
                 if i != target_row:
-                    QToolTip.showText(cell.rect().center(), "無効な値です")
+                    self.show_tooltip_at_cell_center(cell, "無効な値です")
                     cell.setText(self.currentData[target_row][column_name])
                     return
 
@@ -410,25 +490,62 @@ class SettingsFormApp(QMainWindow):
 
     def validate_database_name(self, cell):
         str_value = cell.text()
+        print(str_value)
         valid = re.match(r'^(?![0-9])[a-zA-Z0-9]+$', str_value)
         if not valid:
-            QToolTip.showText(cell.rect().center(), "無効な値です")
+            QMessageBox.warning(self, "エラー", "無効な値です")
             cell.setText(self.currentData[cell.row()]["databasename"])
-
+            return False
+    
+        return True
+    
     def validate_color(self, cell):
         color_str = cell.text()
         parts = color_str.split(',')
         if len(parts) != 3 or not all(part.isdigit() and 0 <= int(part) < 256 for part in parts):
-            QToolTip.showText(cell.rect().center(), "無効な値です")
+            QMessageBox.warning(self, "エラー", "無効な値です")
             cell.setText(",".join(map(str, self.currentData[cell.row()]["color"])))
+            return False
+    
+        return True
+
 
     def validate_search_str(self, cell):
         search_str = cell.text()
         parts = search_str.split(',')
         if not parts:
-            QToolTip.showText(cell.rect().center(), "無効な値です")
+            QMessageBox.warning(self, "エラー", "無効な値です")
             cell.setText(",".join(self.currentData[cell.row()]["searchStr"]))
 
+    def validate_status(self, cell_widget, row, column):
+        status = cell_widget.currentText()
+        
+        if not status.strip():
+            QMessageBox.warning(self, "空白です。文字を入力してください")
+            return False
+        elif not status in ["日勤", "夜勤", "休診日日勤"]:
+            # メッセージボックスを作成
+            msg_box = QMessageBox(self)
+            msg_box.setWindowTitle("確認")
+            msg_box.setText("日勤・夜勤・休診日日勤以外の文字列が選択されています。\nこのままでよろしいですか?")
+            msg_box.setIcon(QMessageBox.Question)
+            msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+
+            # メッセージボックスを表示し、ユーザーの選択結果を取得
+            result = msg_box.exec_()
+            # ユーザーがNoを選んだ場合
+            if result == QMessageBox.No:
+                cell_widget.setCurrentText(str(self.currentData[row]["status"]))
+                return False
+        return True
+            
+    def validate_target(self, cell_widget, row, column):
+        target = cell_widget.currentText()
+        if not target.lower() in ["true", "false"]:
+            cell_widget.setCurrentText(str(self.currentData[row]["target"]))
+            return False
+        return True
+    
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
