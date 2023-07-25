@@ -1,10 +1,10 @@
 {
     "Modalities": [
         {
+            "order": 1,
             "name": "放射線治療",
             "acronym": "RT",
             "databasename": "rt",
-            "order": 1,
             "target": true,
             "color": [
                 206,
@@ -77,7 +77,7 @@
             "acronym": "MG",
             "databasename": "mg",
             "order": 7,
-            "target": true,
+            "target": false,
             "color": [
                 255,
                 115,
@@ -148,7 +148,7 @@
             "name": "撮影助手",
             "acronym": "AS",
             "databasename": "as",
-            "order": 14,
+            "order": 13,
             "target": false,
             "color": [
                 192,
@@ -160,7 +160,7 @@
             "name": "その他",
             "acronym": "ET",
             "databasename": "et",
-            "order": 15,
+            "order": 14,
             "target": false,
             "color": [
                 192,
@@ -171,9 +171,9 @@
     ],
     "Shifts": [
         {
+            "order": 1,
             "name": "休日",
             "acronym": "休",
-            "order": 1,
             "color": [
                 192,
                 192,
@@ -493,10 +493,10 @@
     ],
     "ModalityConfigHeader": [
         {
+            "order": 1,
             "name": "放射線治療",
             "acronym": "RT",
             "databasename": "rt",
-            "order": 1,
             "searchStr": [
                 "rt"
             ]
@@ -660,9 +660,9 @@
     ],
     "WorkCountHeader": [
         {
+            "order": 1,
             "name": "休日",
             "acronym": "休",
-            "order": 1,
             "searchStr": [
                 "休",
                 "振"
@@ -735,11 +735,11 @@
     ],
     "Skills": [
         {
+            "order": 1,
             "name": "放射線治療",
             "acronym": "RT",
             "databasename": "rt",
-            "status": "test",
-            "order": 1,
+            "status": "日勤",
             "color": [
                 200,
                 250,

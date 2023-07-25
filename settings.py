@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, \
 from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt, pyqtSignal
 
+# セルを選択した際に、編集した場合のみ信号を発火するためのクラス
 class EditingFinishedDelegate(QStyledItemDelegate):
     editingFinished = pyqtSignal(int, int)
 
@@ -35,6 +36,7 @@ class SettingsFormApp(QMainWindow):
         self.DEFAULTCOLOR = [255, 255, 255]
         self.DEFAULTSEARCHSTR = ["search", "str"]
         self.DEFAULTSTATUS = "日勤"
+        self.DEFAULTTARGET = False
 
         self.data = {}
         self.modalities = []
@@ -44,7 +46,6 @@ class SettingsFormApp(QMainWindow):
         self.workCountHeaders = []
         self.currentData = []
 
-        self.editCell = None
         self.disableCellValueChangedEvent = True
 
         self.init_ui()
@@ -61,19 +62,15 @@ class SettingsFormApp(QMainWindow):
         self.tableWidget.setGeometry(20, 60, 760, 440)
         self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectItems)
         self.tableWidget.setSelectionMode(QAbstractItemView.SingleSelection)
-        # self.tableWidget.setSelectionMode(QAbstractItemView.NoSelection)
 
          # テーブルのセルを選択したときに編集可能にする
-        # self.tableWidget.setEditTriggers(QAbstractItemView.DoubleClicked)
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tableWidget.itemSelectionChanged.connect(self.on_selection_changed)
         # cellDoubleClickedシグナルにスロットを接続
         self.tableWidget.cellDoubleClicked.connect(self.onCellDoubleClicked)
         # セルの値が変更された後に発生、
-        # self.tableWidget.itemChanged.connect(self.on_cell_value_changed)
-        # self.tableWidget.cellChanged.connect(self.on_cell_value_changed)
-
+        self.tableWidget.verticalHeader().setVisible(False)
 
         self.radio_button1 = QRadioButton("Modalities", self)
         self.radio_button1.setGeometry(20, 20, 100, 20)
@@ -153,84 +150,28 @@ class SettingsFormApp(QMainWindow):
 
         for i, row_data in enumerate(data):
             self.tableWidget.insertRow(i)
-
-            self.create_cell(row_data, i, columns)
-            for j, key in enumerate(columns):
-                value = row_data.get(key, "")
-
-                if key == "status":
-                    # cell_widget = QComboBox()
-                    # cell_widget.addItems(["日勤","夜勤","休診日日勤"])
-                    # # cell_widget.setCurrentText(value)
-                    # cell_widget.setEditable(True)
-                    # cell_widget.setLineEdit(cell_widget.lineEdit())
-                    # self.tableWidget.setCellWidget(i, j, cell_widget)
-                    # cell_widget.setToolTip(self.get_tooltip_text(key))
-                    # cell_widget.currentIndexChanged.connect(lambda idx, r=i, c=j: self.on_cell_value_changed(r,c))
-                    # cell_widget.setCurrentText(value)
-                    self.create_status_cell(value, i, j)
-                elif key == "target":
-                    # cell_widget = QComboBox()
-                    # cell_widget.addItems(["True","False"])
-                    # # cell_widget.setCurrentText(str(value))
-                    # self.tableWidget.setCellWidget(i, j, cell_widget)
-                    # cell_widget.setToolTip(self.get_tooltip_text(key))
-                    # cell_widget.currentIndexChanged.connect(lambda idx, r=i, c=j: self.on_cell_value_changed(r,c))
-                    # cell_widget.setCurrentText(str(value))
-                    self.create_target_cell(value, i, j)
-                elif key == "color":
-                    item = QTableWidgetItem(",".join(str(x) for x in value))
-                    self.tableWidget.setItem(i,j,item)
-                    self.tableWidget.item(i, j).setBackground(QColor(*value))
-                    self.tableWidget.item(i, j).setToolTip(self.get_tooltip_text(key))
-                elif key == "searchStr":
-                    item = QTableWidgetItem(",".join(str(x) for x in value))
-                    self.tableWidget.setItem(i, j, item)
-                    self.tableWidget.item(i, j).setToolTip(self.get_tooltip_text(key))
-                else:
-                    item = QTableWidgetItem(str(value))
-                    self.tableWidget.setItem(i, j, item)
-                    self.tableWidget.item(i, j).setToolTip(self.get_tooltip_text(key))
-                
+            self.create_cell(row_data, columns, i)
 
         self.tableWidget.setCurrentCell(-1, -1)
 
         self.disableCellValueChangedEvent = False
 
-    def create_cell(self, row_data, row, columns):
+
+    def create_cell(self, row_data, columns, row):
         for j, key in enumerate(columns):
             value = row_data.get(key, "")
-            cell = self.tableWidget
+
             if key == "status":
-                    # cell_widget = QComboBox()
-                    # cell_widget.addItems(["日勤","夜勤","休診日日勤"])
-                    # cell_widget.setEditable(True)
-                    # cell_widget.setLineEdit(cell_widget.lineEdit())
-                    # cell.setCellWidget(row, j, cell_widget)
-                    # cell_widget.setToolTip(self.get_tooltip_text(key))
-                    # cell_widget.currentIndexChanged.connect(lambda idx, r=row, c=j: self.on_cell_value_changed(r,c))
-                    # cell_widget.setCurrentText(value)
-                    self.create_status_cell(value, row, j)
+                self.create_status_cell(value, row, j)
             elif key == "target":
-                    cell_widget = QComboBox()
-                    cell_widget.addItems(["True","False"])
-                    cell.setCellWidget(row, j, cell_widget)
-                    cell_widget.setToolTip(self.get_tooltip_text(key))
-                    cell_widget.currentIndexChanged.connect(lambda idx, r=row, c=j: self.on_cell_value_changed(r,c))
-                    cell_widget.setCurrentText(str(value))
+                self.create_target_cell(value, row, j)
             elif key == "color":
-                    item = QTableWidgetItem(",".join(str(x) for x in value))
-                    cell.setItem(row,j,item)
-                    cell.item(row, j).setBackground(QColor(*value))
-                    cell.item(row, j).setToolTip(self.get_tooltip_text(key))
+                self.create_color_cell(value, row, j)
             elif key == "searchStr":
-                    item = QTableWidgetItem(",".join(str(x) for x in value))
-                    cell.setItem(row, j, item)
-                    cell.item(row, j).setToolTip(self.get_tooltip_text(key))
+                self.create_searchStr_cell(value, row, j)
             else:
-                    item = QTableWidgetItem(str(value))
-                    cell.setItem(row, j, item)
-                    cell.item(row, j).setToolTip(self.get_tooltip_text(key))        
+                self.create_default_cell(value, row, j, key)
+
 
     def create_status_cell(self, value, row, column):
         cell_widget = QComboBox()
@@ -254,6 +195,21 @@ class SettingsFormApp(QMainWindow):
         cell_widget.currentIndexChanged.connect(lambda idx, r=row, c=column: self.on_cell_value_changed(r,c))
         cell_widget.setCurrentText(str(value)) 
 
+    def create_color_cell(self, value, row, column):
+        item = QTableWidgetItem(",".join(str(x) for x in value))
+        self.tableWidget.setItem(row, column, item)
+        self.tableWidget.item(row, column).setBackground(QColor(*value))
+        self.tableWidget.item(row, column).setToolTip(self.get_tooltip_text("color"))
+
+    def create_searchStr_cell(self, value, row, column):
+        item = QTableWidgetItem(",".join(str(x) for x in value))
+        self.tableWidget.setItem(row, column, item)
+        self.tableWidget.item(row, column).setToolTip(self.get_tooltip_text("searchStr"))
+
+    def create_default_cell(self, value, row, column, column_name):
+        item = QTableWidgetItem(str(value))
+        self.tableWidget.setItem(row, column, item)
+        self.tableWidget.item(row, column).setToolTip(self.get_tooltip_text(column_name))
 
     def get_tooltip_text(self, column_name):
         tooltip_text = ""
@@ -319,17 +275,6 @@ class SettingsFormApp(QMainWindow):
         elif column_name != "order":
             self.tableWidget.editItem(cell)
 
-
-    # def lock_cells(self):
-    #     for row in range(self.tableWidget.rowCount()):
-    #         for col in range(self.tableWidget.columnCount()):
-    #             cell = self.tableWidget.item(row, col)
-    #             cell.setFlags(cell.flags() & ~Qt.ItemIsEditable)
-                # if cell == self.editCell:
-                #     cell.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsEditable)
-                # else:
-                #     cell.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
-
     def save_changes_to_json_file(self):
         json_file_path = "settings.json"
   
@@ -362,6 +307,9 @@ class SettingsFormApp(QMainWindow):
 
         self.tableWidget.setCurrentCell(target_index, 0)
 
+        self.convet_currentData_to_origin()
+
+
     def on_move_up_clicked(self):
         self.move_row(-1)
 
@@ -378,52 +326,48 @@ class SettingsFormApp(QMainWindow):
             if result == QMessageBox.Yes:
                 self.tableWidget.removeRow(selected_row)
                 self.currentData.pop(selected_row)
-                self.set_object_data()
+                self.reset_order()
+                self.convet_currentData_to_origin()
 
+    def reset_order(self):
+        data = self.currentData
+        columns = list(data[0].keys())
+        for i, row_data in enumerate(data):
+            for j, key in enumerate(columns):
+                value = row_data.get(key, "")
+                if key == "order":
+                    row_data[key] = i + 1
+                    item = QTableWidgetItem(str(i + 1))
+                    self.tableWidget.setItem(i, j, item)
+        
     def on_add_item_clicked(self):
+
         self.disableCellValueChangedEvent = True
         self.tableWidget.insertRow(self.tableWidget.rowCount())
         ro = len(self.currentData)
-        co = len(self.currentData[0])
+
+        columns = list(self.currentData[0].keys())
         new_row = {}
 
-        for j in range(co):
-            column_name = self.tableWidget.horizontalHeaderItem(j).text()
+        for j, key in enumerate(columns):
+            if key == "status":
+                new_row[key] = self.DEFAULTSTATUS
+            elif key == "target":
+                new_row[key] = self.DEFAULTTARGET
+            elif key == "color":
+                new_row[key] = self.DEFAULTCOLOR
+            elif key == "searchStr":
+                new_row[key] = self.DEFAULTSEARCHSTR
+            elif key == "order":
+                new_row[key] = ro + 1
+            else:
+                new_row[key] = key
+            
+        self.currentData.append(new_row)
 
-            if column_name == "name":
-                self.tableWidget.setItem(ro, j, QTableWidgetItem(self.DEFAULTNAME))
-                new_row[column_name] = self.DEFAULTNAME
-            elif column_name == "acronym":
-                self.tableWidget.setItem(ro, j, QTableWidgetItem(self.DEFAULTACRONYM))
-                new_row[column_name] = self.DEFAULTACRONYM
-            elif column_name == "databasename":
-                self.tableWidget.setItem(ro, j, QTableWidgetItem(self.DEFAULTDATABASENAME))
-                new_row[column_name] = self.DEFAULTDATABASENAME
-            elif column_name == "order":
-                self.tableWidget.setItem(ro, j, QTableWidgetItem(str(ro + 1)))
-                new_row[column_name] = ro + 1
-            elif column_name == "target":
-                self.tableWidget.setItem(ro, j, QTableWidgetItem("False"))
-                new_row[column_name] = False
-            elif column_name == "color":
-                self.tableWidget.setItem(ro, j, QTableWidgetItem(",".join(map(str, self.DEFAULTCOLOR))))
-                color_arr = self.DEFAULTCOLOR.copy()
-                new_row[column_name] = color_arr
-                self.tableWidget.item(ro, j).setBackground(QColor(*color_arr))
-            elif column_name == "searchStr":
-                self.tableWidget.setItem(ro, j, QTableWidgetItem(",".join(self.DEFAULTSEARCHSTR)))
-                str_arr = self.DEFAULTSEARCHSTR.copy()
-                new_row[column_name] = str_arr
-            elif column_name == "status":
-                self.tableWidget.setCellWidget(ro, j, QComboBox())
-                self.tableWidget.cellWidget(ro, j).addItems(["日勤", "夜勤", "休診日日勤"])
-                new_row[column_name] = "日勤"
+        self.create_cell(new_row, columns, ro)
 
-        # self.currentData.append(new_row)
         self.tableWidget.setCurrentCell(ro, 0)
-        self.editCell = self.tableWidget.item(ro, 0)
-        # self.lock_cells()
-        self.tableWidget.editItem(self.editCell)
 
         self.disableCellValueChangedEvent = False
 
@@ -514,45 +458,6 @@ class SettingsFormApp(QMainWindow):
             self.skills = self.currentData 
 
         self.save_changes_to_json_file()
-
-
-    # def set_object_data(self):
-    #     row_count = self.tableWidget.rowCount()
-    #     col_count = self.tableWidget.columnCount()
-    #     for row in range(row_count):
-    #         new_row = {}
-    #         for col in range(col_count):
-    #             column_name = self.tableWidget.horizontalHeaderItem(col).text()
-    #             cell = self.tableWidget.item(row, col)
-    #             if column_name == "color":
-    #                 color_str = cell.text()
-    #                 color_arr = [int(c) for c in re.findall(r'\d+', color_str)]
-    #                 cell.setBackground(QColor(*color_arr))
-    #                 new_row[column_name] = color_arr
-    #             elif column_name == "searchStr":
-    #                 search_str = cell.text()
-    #                 new_row[column_name] = search_str.split(',')
-    #             elif column_name == "target":
-    #                 value = cell.text().lower() == "true"
-    #                 new_row[column_name] = value
-    #             else:
-    #                 new_row[column_name] = cell.text()
-
-    #         self.currentData[row] = new_row
-
-    # def validate_string(self, cell):
-    #     target_str = cell.text()
-    #     column_name = self.tableWidget.horizontalHeaderItem(cell.column()).text()
-    #     target_row = cell.row()
-
-    #     for i in range(self.tableWidget.rowCount()):
-    #         if target_str == self.tableWidget.item(i, cell.column()).text():
-    #             if i != target_row:
-    #                 self.show_tooltip_at_cell_center(cell, "無効な値です")
-    #                 cell.setText(self.currentData[target_row][column_name])
-    #                 return
-
-    #     self.currentData[target_row][column_name] = target_str
 
     def validate_strip(self, cell):
         str_value = cell.text()
