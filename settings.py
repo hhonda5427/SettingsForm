@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, \
                             QHeaderView, QAbstractItemView, QComboBox, \
                             QColorDialog, QToolTip, QTableWidget, QRadioButton, \
                             QLabel, QPushButton, QMessageBox, QStyledItemDelegate, \
-                            QLineEdit, QMessageBox
+                            QLineEdit, QMessageBox, QCompleter
 from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt, pyqtSignal
 
@@ -125,7 +125,7 @@ class SettingsFormApp(QMainWindow):
         root_dir = os.getcwd()
 
         path = os.path.join(root_dir, 'settings.json')
-        print(path)
+
         if os.path.isfile(path):
 
             json_open = open(path, 'r', encoding='utf-8')
@@ -138,6 +138,7 @@ class SettingsFormApp(QMainWindow):
         self.workCountHeaders = self.data.get("WorkCountHeader", [])      
 
     def set_table_view(self, data):
+        self.disableCellValueChangedEvent = True
         self.tableWidget.clear()
         self.tableWidget.setRowCount(0)
         self.tableWidget.setColumnCount(0)
@@ -146,34 +147,37 @@ class SettingsFormApp(QMainWindow):
             return
 
         columns = list(data[0].keys())
-        print(columns)
+
         self.tableWidget.setColumnCount(len(columns))
         self.tableWidget.setHorizontalHeaderLabels(columns)
 
         for i, row_data in enumerate(data):
             self.tableWidget.insertRow(i)
 
+            self.create_cell(row_data, i, columns)
             for j, key in enumerate(columns):
                 value = row_data.get(key, "")
 
                 if key == "status":
-                    cell_widget = QComboBox()
-                    cell_widget.addItems(["日勤","夜勤","休診日日勤"])
-                    cell_widget.setCurrentText(value)
-                    cell_widget.setEditable(True)
-                    cell_widget.setLineEdit(cell_widget.lineEdit())
-                    self.tableWidget.setCellWidget(i, j, cell_widget)
-                    cell_widget.setToolTip(self.get_tooltip_text(key))
-                    cell_widget.currentIndexChanged.connect(lambda idx, r=i, c=j: self.on_cell_value_changed(r,c))
-                    
+                    # cell_widget = QComboBox()
+                    # cell_widget.addItems(["日勤","夜勤","休診日日勤"])
+                    # # cell_widget.setCurrentText(value)
+                    # cell_widget.setEditable(True)
+                    # cell_widget.setLineEdit(cell_widget.lineEdit())
+                    # self.tableWidget.setCellWidget(i, j, cell_widget)
+                    # cell_widget.setToolTip(self.get_tooltip_text(key))
+                    # cell_widget.currentIndexChanged.connect(lambda idx, r=i, c=j: self.on_cell_value_changed(r,c))
+                    # cell_widget.setCurrentText(value)
+                    self.create_status_cell(value, i, j)
                 elif key == "target":
-                    cell_widget = QComboBox()
-                    cell_widget.addItems(["True","False"])
-                    cell_widget.setCurrentText(str(value))
-                    self.tableWidget.setCellWidget(i, j, cell_widget)
-                    cell_widget.setToolTip(self.get_tooltip_text(key))
-                    cell_widget.currentIndexChanged.connect(lambda idx, r=i, c=j: self.on_cell_value_changed(r,c))
-
+                    # cell_widget = QComboBox()
+                    # cell_widget.addItems(["True","False"])
+                    # # cell_widget.setCurrentText(str(value))
+                    # self.tableWidget.setCellWidget(i, j, cell_widget)
+                    # cell_widget.setToolTip(self.get_tooltip_text(key))
+                    # cell_widget.currentIndexChanged.connect(lambda idx, r=i, c=j: self.on_cell_value_changed(r,c))
+                    # cell_widget.setCurrentText(str(value))
+                    self.create_target_cell(value, i, j)
                 elif key == "color":
                     item = QTableWidgetItem(",".join(str(x) for x in value))
                     self.tableWidget.setItem(i,j,item)
@@ -192,6 +196,64 @@ class SettingsFormApp(QMainWindow):
         self.tableWidget.setCurrentCell(-1, -1)
 
         self.disableCellValueChangedEvent = False
+
+    def create_cell(self, row_data, row, columns):
+        for j, key in enumerate(columns):
+            value = row_data.get(key, "")
+            cell = self.tableWidget
+            if key == "status":
+                    # cell_widget = QComboBox()
+                    # cell_widget.addItems(["日勤","夜勤","休診日日勤"])
+                    # cell_widget.setEditable(True)
+                    # cell_widget.setLineEdit(cell_widget.lineEdit())
+                    # cell.setCellWidget(row, j, cell_widget)
+                    # cell_widget.setToolTip(self.get_tooltip_text(key))
+                    # cell_widget.currentIndexChanged.connect(lambda idx, r=row, c=j: self.on_cell_value_changed(r,c))
+                    # cell_widget.setCurrentText(value)
+                    self.create_status_cell(value, row, j)
+            elif key == "target":
+                    cell_widget = QComboBox()
+                    cell_widget.addItems(["True","False"])
+                    cell.setCellWidget(row, j, cell_widget)
+                    cell_widget.setToolTip(self.get_tooltip_text(key))
+                    cell_widget.currentIndexChanged.connect(lambda idx, r=row, c=j: self.on_cell_value_changed(r,c))
+                    cell_widget.setCurrentText(str(value))
+            elif key == "color":
+                    item = QTableWidgetItem(",".join(str(x) for x in value))
+                    cell.setItem(row,j,item)
+                    cell.item(row, j).setBackground(QColor(*value))
+                    cell.item(row, j).setToolTip(self.get_tooltip_text(key))
+            elif key == "searchStr":
+                    item = QTableWidgetItem(",".join(str(x) for x in value))
+                    cell.setItem(row, j, item)
+                    cell.item(row, j).setToolTip(self.get_tooltip_text(key))
+            else:
+                    item = QTableWidgetItem(str(value))
+                    cell.setItem(row, j, item)
+                    cell.item(row, j).setToolTip(self.get_tooltip_text(key))        
+
+    def create_status_cell(self, value, row, column):
+        cell_widget = QComboBox()
+        cell_widget.addItems(["日勤","夜勤","休診日日勤"])
+        cell_widget.setEditable(True)
+        completer = QCompleter(["日勤", "夜勤", "休診日日勤"])
+        cell_widget.setCompleter(completer)
+        line_edit = cell_widget.lineEdit()
+        line_edit.setProperty("row", row)
+        line_edit.setProperty("column", column)
+        self.tableWidget.setCellWidget(row, column, cell_widget)
+        cell_widget.setToolTip(self.get_tooltip_text("status"))
+        cell_widget.currentIndexChanged.connect(lambda idx, r=row, c=column: self.on_cell_value_changed(r,c))
+        cell_widget.setCurrentText(value)
+
+    def create_target_cell(self, value, row, column):
+        cell_widget = QComboBox()
+        cell_widget.addItems(["True","False"])
+        self.tableWidget.setCellWidget(row, column, cell_widget)
+        cell_widget.setToolTip(self.get_tooltip_text("target"))
+        cell_widget.currentIndexChanged.connect(lambda idx, r=row, c=column: self.on_cell_value_changed(r,c))
+        cell_widget.setCurrentText(str(value)) 
+
 
     def get_tooltip_text(self, column_name):
         tooltip_text = ""
@@ -258,11 +320,11 @@ class SettingsFormApp(QMainWindow):
             self.tableWidget.editItem(cell)
 
 
-    def lock_cells(self):
-        for row in range(self.tableWidget.rowCount()):
-            for col in range(self.tableWidget.columnCount()):
-                cell = self.tableWidget.item(row, col)
-                cell.setFlags(cell.flags() & ~Qt.ItemIsEditable)
+    # def lock_cells(self):
+    #     for row in range(self.tableWidget.rowCount()):
+    #         for col in range(self.tableWidget.columnCount()):
+    #             cell = self.tableWidget.item(row, col)
+    #             cell.setFlags(cell.flags() & ~Qt.ItemIsEditable)
                 # if cell == self.editCell:
                 #     cell.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsEditable)
                 # else:
@@ -270,7 +332,7 @@ class SettingsFormApp(QMainWindow):
 
     def save_changes_to_json_file(self):
         json_file_path = "settings.json"
-        print("save")
+  
         updated_data = {
             "Modalities": self.modalities,
             "Shifts": self.shifts,
@@ -279,8 +341,8 @@ class SettingsFormApp(QMainWindow):
             "Skills": self.skills,
         }
 
-        with open(json_file_path, "w") as f:
-            json.dump(updated_data, f, indent=4)
+        with open(json_file_path, "w", encoding="utf-8") as f:
+            json.dump(updated_data, f, indent=4, ensure_ascii=False)
 
     def move_row(self, shift_index):
         selected_row = self.tableWidget.currentRow()
@@ -357,10 +419,10 @@ class SettingsFormApp(QMainWindow):
                 self.tableWidget.cellWidget(ro, j).addItems(["日勤", "夜勤", "休診日日勤"])
                 new_row[column_name] = "日勤"
 
-        self.currentData.append(new_row)
+        # self.currentData.append(new_row)
         self.tableWidget.setCurrentCell(ro, 0)
         self.editCell = self.tableWidget.item(ro, 0)
-        self.lock_cells()
+        # self.lock_cells()
         self.tableWidget.editItem(self.editCell)
 
         self.disableCellValueChangedEvent = False
@@ -373,6 +435,7 @@ class SettingsFormApp(QMainWindow):
             cell.setBackground(color)
 
     def on_cell_value_changed(self, row, column):
+
         if not self.disableCellValueChangedEvent:
 
             column_name = self.tableWidget.horizontalHeaderItem(column).text()
@@ -382,9 +445,6 @@ class SettingsFormApp(QMainWindow):
             if column_name == "order":
                 if cell.text().isdigit():
                     flg = (int(cell.text()) == row + 1)
-
-            elif column_name == "name":
-                flg = self.validate_string(cell)
 
             elif column_name == "databasename":
                 flg = self.validate_database_name(cell)
@@ -403,9 +463,13 @@ class SettingsFormApp(QMainWindow):
                 cell_widget = self.tableWidget.cellWidget(row, column)
                 flg = self.validate_status(cell_widget, row, column)
 
+            else:
+                flg = self.validate_strip(cell) 
+
             if flg:
                 self.set_currentData(row)
 
+    # 値を変えた行はすべてデータを書き換える
     def set_currentData(self, row):
         col_count = self.tableWidget.columnCount()
 
@@ -421,9 +485,11 @@ class SettingsFormApp(QMainWindow):
                 self.currentData[row][column_name] = self.tableWidget.item(row,col).text().split(',')
             elif column_name == "target":
                 value = self.tableWidget.cellWidget(row, col).currentText()
-                self.currentData[row][column_name] = bool(value)
+                self.currentData[row][column_name] = value.lower() == "true"
             elif column_name == "status":
+                print(f"pre:{self.tableWidget.cellWidget(row, col).currentText()}")
                 self.currentData[row][column_name] = self.tableWidget.cellWidget(row, col).currentText()
+                print(f"post:{self.currentData[row][column_name]}")
             else:
                 self.currentData[row][column_name] = self.tableWidget.item(row, col).text()
 
@@ -431,66 +497,75 @@ class SettingsFormApp(QMainWindow):
 
 
     def convet_currentData_to_origin(self):
-        print("convert_currentData2orign")
+        
         if self.radio_button1.isChecked():
             self.modalities = self.currentData 
-            print(self.modalities)
+
         elif self.radio_button2.isChecked():
             self.shifts = self.currentData
-            print(self.shifts)
+
         elif self.radio_button3.isChecked():
             self.workCountHeaders = self.currentData
-            print(self.workCountHeaders)
+
         elif self.radio_button4.isChecked():
             self.modalityConfigHeaders = self.currentData
-            print(self.modalityConfigHeaders)
+
         elif self.radio_button5.isChecked():
             self.skills = self.currentData 
-            print(self.skills)
-        # self.save_changes_to_json_file()
+
+        self.save_changes_to_json_file()
 
 
-    def set_object_data(self):
-        row_count = self.tableWidget.rowCount()
-        col_count = self.tableWidget.columnCount()
-        for row in range(row_count):
-            new_row = {}
-            for col in range(col_count):
-                column_name = self.tableWidget.horizontalHeaderItem(col).text()
-                cell = self.tableWidget.item(row, col)
-                if column_name == "color":
-                    color_str = cell.text()
-                    color_arr = [int(c) for c in re.findall(r'\d+', color_str)]
-                    cell.setBackground(QColor(*color_arr))
-                    new_row[column_name] = color_arr
-                elif column_name == "searchStr":
-                    search_str = cell.text()
-                    new_row[column_name] = search_str.split(',')
-                elif column_name == "target":
-                    value = cell.text().lower() == "true"
-                    new_row[column_name] = value
-                else:
-                    new_row[column_name] = cell.text()
+    # def set_object_data(self):
+    #     row_count = self.tableWidget.rowCount()
+    #     col_count = self.tableWidget.columnCount()
+    #     for row in range(row_count):
+    #         new_row = {}
+    #         for col in range(col_count):
+    #             column_name = self.tableWidget.horizontalHeaderItem(col).text()
+    #             cell = self.tableWidget.item(row, col)
+    #             if column_name == "color":
+    #                 color_str = cell.text()
+    #                 color_arr = [int(c) for c in re.findall(r'\d+', color_str)]
+    #                 cell.setBackground(QColor(*color_arr))
+    #                 new_row[column_name] = color_arr
+    #             elif column_name == "searchStr":
+    #                 search_str = cell.text()
+    #                 new_row[column_name] = search_str.split(',')
+    #             elif column_name == "target":
+    #                 value = cell.text().lower() == "true"
+    #                 new_row[column_name] = value
+    #             else:
+    #                 new_row[column_name] = cell.text()
 
-            self.currentData[row] = new_row
+    #         self.currentData[row] = new_row
 
-    def validate_string(self, cell):
-        target_str = cell.text()
-        column_name = self.tableWidget.horizontalHeaderItem(cell.column()).text()
-        target_row = cell.row()
+    # def validate_string(self, cell):
+    #     target_str = cell.text()
+    #     column_name = self.tableWidget.horizontalHeaderItem(cell.column()).text()
+    #     target_row = cell.row()
 
-        for i in range(self.tableWidget.rowCount()):
-            if target_str == self.tableWidget.item(i, cell.column()).text():
-                if i != target_row:
-                    self.show_tooltip_at_cell_center(cell, "無効な値です")
-                    cell.setText(self.currentData[target_row][column_name])
-                    return
+    #     for i in range(self.tableWidget.rowCount()):
+    #         if target_str == self.tableWidget.item(i, cell.column()).text():
+    #             if i != target_row:
+    #                 self.show_tooltip_at_cell_center(cell, "無効な値です")
+    #                 cell.setText(self.currentData[target_row][column_name])
+    #                 return
 
-        self.currentData[target_row][column_name] = target_str
+    #     self.currentData[target_row][column_name] = target_str
 
+    def validate_strip(self, cell):
+        str_value = cell.text()
+        if not str_value.strip():
+            column_name = self.tableWidget.horizontalHeaderItem(cell.column()).text()
+            QMessageBox.warning(self,"エラー", "空白です")
+            cell.setText(self.currentData[cell.row()][column_name])
+            return False
+        return True
+    
     def validate_database_name(self, cell):
         str_value = cell.text()
-        print(str_value)
+   
         valid = re.match(r'^(?![0-9])[a-zA-Z0-9]+$', str_value)
         if not valid:
             QMessageBox.warning(self, "エラー", "無効な値です")
