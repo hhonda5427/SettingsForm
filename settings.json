@@ -939,11 +939,11 @@
             ]
         },
         {
-            "name": "血管造影(休診日)",
+            "name": "血管造影(休)",
             "acronym": "AG",
             "databasename": "ag",
             "order": 18,
-            "status": "休診日日勤",
+            "status": "休日勤",
             "color": [
                 200,
                 200,
@@ -951,11 +951,11 @@
             ]
         },
         {
-            "name": "MRI(休診日)",
+            "name": "MRI(休)",
             "acronym": "MR",
             "databasename": "mr",
             "order": 19,
-            "status": "休診日日勤",
+            "status": "休日勤",
             "color": [
                 255,
                 255,
@@ -963,11 +963,11 @@
             ]
         },
         {
-            "name": "CT(休診日)",
+            "name": "CT(休)",
             "acronym": "CT",
             "databasename": "ct",
             "order": 20,
-            "status": "休診日日勤",
+            "status": "休日勤",
             "color": [
                 200,
                 200,
@@ -975,16 +975,64 @@
             ]
         },
         {
-            "name": "Free(休診日)",
+            "name": "Free(休)",
             "acronym": "FR",
             "databasename": "fr",
             "order": 21,
-            "status": "休診日日勤",
+            "status": "休日勤",
             "color": [
                 255,
                 255,
                 255
             ]
+        }
+    ],
+    "SkillTypes": [
+        {
+            "order": 1,
+            "name": "できない",
+            "acronym": 0,
+            "status": "日勤"
+        },
+        {
+            "order": 2,
+            "name": "習得中",
+            "acronym": 1,
+            "status": "日勤"
+        },
+        {
+            "order": 3,
+            "name": "できる",
+            "acronym": 2,
+            "status": "日勤"
+        },
+        {
+            "order": 4,
+            "name": "できない",
+            "acronym": 0,
+            "status": "夜勤"
+        }
+    ],
+    "WorkingGroups": [
+        {
+            "order": 1,
+            "name": "被ばく"
+        },
+        {
+            "order": 2,
+            "name": "医療安全"
+        },
+        {
+            "order": 3,
+            "name": "システム"
+        },
+        {
+            "order": 4,
+            "name": "装置管理"
+        },
+        {
+            "order": 5,
+            "name": "業務改善"
         }
     ]
 }

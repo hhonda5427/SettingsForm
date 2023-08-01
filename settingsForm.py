@@ -57,8 +57,10 @@ class SettingsFormApp(QMainWindow):
         self.modalities = []
         self.shifts = []
         self.skills = []
+        self.skillTypes = []
         self.modalityConfigHeaders = []
         self.workCountHeaders = []
+        self.workingGroups = []
         self.currentData = []
 
         self.disableCellValueChangedEvent = True
@@ -89,7 +91,7 @@ class SettingsFormApp(QMainWindow):
 
         self.combo_box = QComboBox(self)
         self.combo_box.setGeometry(20, 20, 300, 30)
-        self.combo_box.addItems(["Modalities", "Shifts", "Work Count Header", "Modality Config Header", "Skills"])
+        self.combo_box.addItems(["Modalities", "Shifts", "Work Count Header", "Modality Config Header", "Skills", "SkillTypes", "WorkingGroups"])
         self.combo_box.currentIndexChanged.connect(self.on_combo_box_index_changed)
 
         self.label = QLabel(self)
@@ -130,9 +132,11 @@ class SettingsFormApp(QMainWindow):
         self.modalities = self.data.get("Modalities", [])
         self.shifts = self.data.get("Shifts", [])
         self.skills = self.data.get("Skills", [])
+        self.skillTypes = self.data.get("SkillTypes", [])
         self.modalityConfigHeaders = self.data.get("ModalityConfigHeader", [])
         self.workCountHeaders = self.data.get("WorkCountHeader", [])      
-
+        self.workingGroups = self.data.get("WorkingGroups", [])
+    
     def set_table_view(self, data):
         self.disableCellValueChangedEvent = True
         self.tableWidget.clear()
@@ -188,9 +192,9 @@ class SettingsFormApp(QMainWindow):
 
     def create_status_cell(self, value, row, column):
         cell_widget = QComboBox()
-        cell_widget.addItems(["日勤","夜勤","休診日日勤"])
+        cell_widget.addItems(["日勤","夜勤","休日勤"])
         cell_widget.setEditable(True)
-        completer = QCompleter(["日勤", "夜勤", "休診日日勤"])
+        completer = QCompleter(["日勤", "夜勤", "休日勤"])
         cell_widget.setCompleter(completer)
         line_edit = cell_widget.lineEdit()
         line_edit.setProperty("row", row)
@@ -256,6 +260,10 @@ class SettingsFormApp(QMainWindow):
             self.currentData = self.modalityConfigHeaders
         elif selected_index == 4:
             self.currentData = self.skills
+        elif selected_index == 5:
+            self.currentData = self.skillTypes
+        elif selected_index == 6:
+            self.currentData = self.workingGroups
 
         self.set_table_view(self.currentData)
 
@@ -294,6 +302,8 @@ class SettingsFormApp(QMainWindow):
             "ModalityConfigHeader": self.modalityConfigHeaders,
             "WorkCountHeader": self.workCountHeaders,
             "Skills": self.skills,
+            "SkillTypes": self.skillTypes,
+            "WorkingGroups": self.workingGroups
         }
 
         with open(json_file_path, "w", encoding="utf-8") as f:
@@ -441,11 +451,13 @@ class SettingsFormApp(QMainWindow):
                 value = self.tableWidget.cellWidget(row, col).currentText()
                 self.currentData[row][column_name] = value.lower() == "true"
             elif column_name == "status":
-                print(f"pre:{self.tableWidget.cellWidget(row, col).currentText()}")
                 self.currentData[row][column_name] = self.tableWidget.cellWidget(row, col).currentText()
-                print(f"post:{self.currentData[row][column_name]}")
             else:
-                self.currentData[row][column_name] = self.tableWidget.item(row, col).text()
+                value = self.tableWidget.item(row, col).text()
+                if value.isdigit():
+                    self.currentData[row][column_name] = int(value)  # 数値の場合は整数に変換して代入
+                else:
+                    self.currentData[row][column_name] = value  # 文字列の場合はそのまま代入
 
         self.convet_currentData_to_origin()
 
@@ -463,6 +475,10 @@ class SettingsFormApp(QMainWindow):
             self.modalityConfigHeaders = self.currentData
         elif selected_index == 4:
             self.skills = self.currentData
+        elif selected_index == 5:
+            self.skillTypes = self.currentData
+        elif selected_index == 6:
+            self.workingGroups = self.currentData
 
         self.save_changes_to_json_file()
 
@@ -510,7 +526,7 @@ class SettingsFormApp(QMainWindow):
         if not status.strip():
             QMessageBox.warning(self, "空白です。文字を入力してください")
             return False
-        elif not status in ["日勤", "夜勤", "休診日日勤"]:
+        elif not status in ["日勤", "夜勤", "休日勤"]:
             # メッセージボックスを作成
             msg_box = QMessageBox(self)
             msg_box.setWindowTitle("確認")
