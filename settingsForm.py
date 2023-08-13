@@ -405,7 +405,6 @@ class SettingsFormApp(QMainWindow):
             column_name = self.tableWidget.horizontalHeaderItem(column).text()
             cell = self.tableWidget.item(row, column)
             flg = False
-
             if column_name == "order":
                 if cell.text().isdigit():
                     flg = (int(cell.text()) == row + 1)
@@ -418,7 +417,7 @@ class SettingsFormApp(QMainWindow):
 
             elif column_name == "searchStr":
                 flg = self.validate_search_str(cell)
-                
+
             elif column_name == "target":
                 cell_widget = self.tableWidget.cellWidget(row,column)
                 flg = self.validate_target(cell_widget, row, column)
@@ -519,7 +518,8 @@ class SettingsFormApp(QMainWindow):
         if not parts:
             QMessageBox.warning(self, "エラー", "無効な値です")
             cell.setText(",".join(self.currentData[cell.row()]["searchStr"]))
-
+            return False
+        return True
     def validate_status(self, cell_widget, row, column):
         status = cell_widget.currentText()
         
