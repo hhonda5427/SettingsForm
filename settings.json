@@ -7,8 +7,8 @@
             "databasename": "rt",
             "target": true,
             "color": [
-                206,
-                206,
+                103,
+                144,
                 255
             ]
         },
@@ -1170,7 +1170,7 @@
             "order": 8,
             "name": "役職",
             "databasename": "post",
-            "init": 1
+            "init": 0
         },
         {
             "order": 9,
@@ -1182,23 +1182,58 @@
     "WorkingGroups": [
         {
             "order": 1,
-            "name": "被ばく"
+            "name": "被ばく",
+            "acronym": "被ばく1",
+            "databasename": "被ばく",
+            "color": [
+                255,
+                170,
+                127
+            ]
         },
         {
             "order": 2,
-            "name": "医療安全"
+            "name": "医療安全",
+            "acronym": "医療安全",
+            "databasename": "医療安全",
+            "color": [
+                170,
+                255,
+                255
+            ]
         },
         {
             "order": 3,
-            "name": "システム"
+            "name": "システム",
+            "acronym": "システム",
+            "databasename": "システム",
+            "color": [
+                170,
+                255,
+                127
+            ]
         },
         {
             "order": 4,
-            "name": "装置管理"
+            "name": "装置管理",
+            "acronym": "装置管理",
+            "databasename": "装置管理",
+            "color": [
+                255,
+                170,
+                255
+            ]
         },
         {
             "order": 5,
-            "name": "業務改善"
+            "name": "業務改善",
+            "acronym": "業務改善",
+            "databasename": "業務改善",
+            "color": [
+                255,
+                255,
+                127
+            ]
         }
     ]
 }

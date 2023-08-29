@@ -57,13 +57,6 @@ class SettingsFormApp(QMainWindow):
         self.data = {}
         self.dynamic_data = {}
 
-        # self.modalities = []
-        # self.shifts = []
-        # self.skills = []
-        # self.skillTypes = []
-        # self.modalityConfigHeaders = []
-        # self.workCountHeaders = []
-        # self.workingGroups = []
         self.currentData = []
 
         self.disableCellValueChangedEvent = True
@@ -218,12 +211,13 @@ class SettingsFormApp(QMainWindow):
         cell_widget.setToolTip(self.get_tooltip_text("target"))
         cell_widget.currentIndexChanged.connect(lambda idx, r=row, c=column: self.on_cell_value_changed(r,c))
         cell_widget.setCurrentText(str(value)) 
-
+        
     def create_color_cell(self, value, row, column):
         item = QTableWidgetItem(",".join(str(x) for x in value))
         self.tableWidget.setItem(row, column, item)
         self.tableWidget.item(row, column).setBackground(QColor(*value))
         self.tableWidget.item(row, column).setToolTip(self.get_tooltip_text("color"))
+        
 
     def create_searchStr_cell(self, value, row, column):
         item = QTableWidgetItem(",".join(str(x) for x in value))
@@ -287,7 +281,7 @@ class SettingsFormApp(QMainWindow):
 
         column_name = self.tableWidget.horizontalHeaderItem(col).text()
         cell = self.tableWidget.item(row, col)
-
+        
         if column_name == "color":
             self.on_color_change(cell)
 
@@ -300,6 +294,7 @@ class SettingsFormApp(QMainWindow):
         # 更新データを動的に設定するためにself.dynamic_dataを使用します
         updated_data = {}
         for key in self.dynamic_data:
+            
             updated_data[key] = self.dynamic_data[key]
 
         with open(json_file_path, "w", encoding="utf-8") as f:
@@ -393,7 +388,11 @@ class SettingsFormApp(QMainWindow):
             color_arr = [color.red(), color.green(), color.blue()]
             cell.setText(",".join(map(str, color_arr)))
             cell.setBackground(color)
-
+            self.disableCellValueChangedEvent = False  # Disable event temporarily
+            self.set_currentData(cell.row())  # Update data
+            self.disableCellValueChangedEvent = True  # Enable event again
+    
+    
     def on_cell_value_changed(self, row, column):
 
         if not self.disableCellValueChangedEvent:
@@ -409,16 +408,20 @@ class SettingsFormApp(QMainWindow):
             #     flg = self.validate_database_name(cell)
 
             elif column_name == "color":
+              
                 flg = self.validate_color(cell)
 
             elif column_name == "searchStr":
+               
                 flg = self.validate_search_str(cell)
 
             elif column_name == "target":
+               
                 cell_widget = self.tableWidget.cellWidget(row,column)
                 flg = self.validate_target(cell_widget, row, column)
 
             elif column_name == "status":
+                
                 cell_widget = self.tableWidget.cellWidget(row, column)
                 flg = self.validate_status(cell_widget, row, column)
 
@@ -493,7 +496,7 @@ class SettingsFormApp(QMainWindow):
             QMessageBox.warning(self, "エラー", "無効な値です")
             cell.setText(",".join(map(str, self.currentData[cell.row()]["color"])))
             return False
-    
+        
         return True
 
 
