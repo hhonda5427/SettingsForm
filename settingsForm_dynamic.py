@@ -6,8 +6,9 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, \
                             QHeaderView, QAbstractItemView, QComboBox, \
                             QColorDialog, QTableWidget, \
                             QLabel, QPushButton, QMessageBox, QStyledItemDelegate, \
-                            QLineEdit, QMessageBox, QCompleter
-from PyQt5.QtGui import QColor
+                            QLineEdit, QMessageBox, QCompleter, \
+                            QVBoxLayout, QWidget
+from PyQt5.QtGui import QColor, QFontMetrics
 from PyQt5.QtCore import Qt, pyqtSignal
 
 # ORDERWIDTH = 50
@@ -68,22 +69,34 @@ class SettingsFormApp(QMainWindow):
         self.tableWidget.setItemDelegate(self.delegate)
 
     def init_ui(self):
+        # メインウィジェットとレイアウトの設定
+        mainWidget = QWidget(self)  # 新しいウィジェットを作成
+        self.setCentralWidget(mainWidget)  # セントラルウィジェットを設定
+        layout = QVBoxLayout(mainWidget)  # QVBoxLayoutを作成        
         self.setWindowTitle("Setting Form")
         self.setGeometry(100, 100, 800, 600)
 
-        self.tableWidget = QTableWidget(self)
-        self.tableWidget.setGeometry(20, 60, 760, 440)
+        self.tableWidget = QTableWidget()
+        layout.addWidget(self.tableWidget)
         self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectItems)
         self.tableWidget.setSelectionMode(QAbstractItemView.SingleSelection)
-
-         # テーブルのセルを選択したときに編集可能にする
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tableWidget.itemSelectionChanged.connect(self.on_selection_changed)
-        # cellDoubleClickedシグナルにスロットを接続
         self.tableWidget.cellDoubleClicked.connect(self.onCellDoubleClicked)
-        # セルの値が変更された後に発生、
-        self.tableWidget.verticalHeader().setVisible(False)
+        self.tableWidget.verticalHeader().setVisible(False)        
+        # self.tableWidget.setGeometry(20, 60, 760, 440)
+        # self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectItems)
+        # self.tableWidget.setSelectionMode(QAbstractItemView.SingleSelection)
+
+        #  # テーブルのセルを選択したときに編集可能にする
+        # self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        # self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # self.tableWidget.itemSelectionChanged.connect(self.on_selection_changed)
+        # # cellDoubleClickedシグナルにスロットを接続
+        # self.tableWidget.cellDoubleClicked.connect(self.onCellDoubleClicked)
+        # # セルの値が変更された後に発生、
+        # self.tableWidget.verticalHeader().setVisible(False)
 
         self.combo_box = QComboBox(self)
         self.combo_box.setGeometry(20, 20, 300, 30)
@@ -95,25 +108,32 @@ class SettingsFormApp(QMainWindow):
         self.label.setAlignment(Qt.AlignCenter)
 
         self.button1 = QPushButton("Move Up", self)
-        self.button1.setGeometry(20, 560, 100, 30)
+        self.adjust_button_geometry(self.button1, 20, 560)
         self.button1.clicked.connect(self.on_move_up_clicked)
 
         self.button2 = QPushButton("Move Down", self)
-        self.button2.setGeometry(130, 560, 100, 30)
+        self.adjust_button_geometry(self.button2, 130, 560)
         self.button2.clicked.connect(self.on_move_down_clicked)
 
         self.button3 = QPushButton("Add Item", self)
-        self.button3.setGeometry(240, 560, 100, 30)
+        self.adjust_button_geometry(self.button3, 240, 560)
         self.button3.clicked.connect(self.on_add_item_clicked)
 
         self.button4 = QPushButton("Remove Item", self)
-        self.button4.setGeometry(350, 560, 100, 30)
+        self.adjust_button_geometry(self.button4, 350, 560)
         self.button4.clicked.connect(self.on_remove_item_clicked)
 
         self.load_data_from_json()
         # self.currentData = self.modalities
         # self.set_table_view(self.currentData)
 
+    def adjust_button_geometry(self, button, x, y):
+        text = button.text()
+        metrics = QFontMetrics(button.font())
+        text_width = metrics.width(text) + 20  # テキストの幅に余白を加える
+        button_height = 30  # ボタンの高さは固定
+        button.setGeometry(x, y, text_width, button_height)
+        
     def load_data_from_json(self):
 
         root_dir = os.getcwd()
@@ -165,14 +185,14 @@ class SettingsFormApp(QMainWindow):
             
             if key == "order":
                 header.setSectionResizeMode(j, QHeaderView.Interactive)
-                header.resizeSection(j, self.DEFAULTWIDTH_ORDER)
+                header.resizeSection(j, self.ORDERWIDTH)
                 self.tableWidget.horizontalHeaderItem(j).setTextAlignment(Qt.AlignCenter)
             elif key == "searchStr":
                 header.setSectionResizeMode(j, QHeaderView.Interactive)
-                header.resizeSection(j, self.DEFAULTWIDTH_SEARCHSTR)
+                header.resizeSection(j, self.DEFAULTWIDTH)
             elif key == "color":
                 header.setSectionResizeMode(j, QHeaderView.Interactive)
-                header.resizeSection(j, self.DEFAULTWIDTH_COLOR)
+                header.resizeSection(j, self.DEFAULTWIDTH)
             else:
                 header.setSectionResizeMode(j, QHeaderView.Interactive)
                 header.resizeSection(j, self.DEFAULTWIDTH)
