@@ -164,16 +164,18 @@ class SettingsFormApp(QMainWindow):
         for j, key in enumerate(columns):
             
             if key == "order":
-                header.setSectionResizeMode(j, QHeaderView.ResizeToContents)
+                header.setSectionResizeMode(j, QHeaderView.Interactive)
+                header.resizeSection(j, self.DEFAULTWIDTH_ORDER)
                 self.tableWidget.horizontalHeaderItem(j).setTextAlignment(Qt.AlignCenter)
             elif key == "searchStr":
-                header.setSectionResizeMode(j, QHeaderView.Stretch)
+                header.setSectionResizeMode(j, QHeaderView.Interactive)
+                header.resizeSection(j, self.DEFAULTWIDTH_SEARCHSTR)
             elif key == "color":
-                header.setSectionResizeMode(j, QHeaderView.Stretch)
+                header.setSectionResizeMode(j, QHeaderView.Interactive)
+                header.resizeSection(j, self.DEFAULTWIDTH_COLOR)
             else:
-                header.setSectionResizeMode(j, QHeaderView.Fixed)
+                header.setSectionResizeMode(j, QHeaderView.Interactive)
                 header.resizeSection(j, self.DEFAULTWIDTH)
-                
     def create_cell(self, row_data, columns, row):
         for j, key in enumerate(columns):
             value = row_data.get(key, "")
@@ -452,10 +454,14 @@ class SettingsFormApp(QMainWindow):
                 self.currentData[row][column_name] = self.tableWidget.cellWidget(row, col).currentText()
             else:
                 value = self.tableWidget.item(row, col).text()
-                if value.isdigit():
-                    self.currentData[row][column_name] = int(value)  # 数値の場合は整数に変換して代入
-                else:
-                    self.currentData[row][column_name] = value  # 文字列の場合はそのまま代入
+                try:
+                    float_value = float(value)
+                    if float_value.is_integer():
+                        self.currentData[row][column_name] = int(float_value)  # 整数として代入
+                    else:
+                        self.currentData[row][column_name] = float_value  # 実数として代入
+                except ValueError:
+                    self.currentData[row][column_name] = value  # 文字列として代入
 
         self.convet_currentData_to_origin()
 
