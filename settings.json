@@ -1,1239 +1,2008 @@
 {
-    "Modalities": [
-        {
-            "order": 1,
-            "name": "放射線治療",
-            "acronym": "RT",
-            "databasename": "rt",
-            "target": true,
-            "color": [
-                103,
-                144,
-                255
-            ]
-        },
-        {
-            "name": "MRI",
-            "acronym": "MR",
-            "databasename": "mr",
-            "order": 2,
-            "target": true,
-            "color": [
-                200,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "X線TV",
-            "acronym": "TV",
-            "databasename": "tv",
-            "order": 3,
-            "target": true,
-            "color": [
-                150,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "健診",
-            "acronym": "KS",
-            "databasename": "ks",
-            "order": 4,
-            "target": true,
-            "color": [
-                100,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "核医学",
-            "acronym": "NM",
-            "databasename": "nm",
-            "order": 5,
-            "target": true,
-            "color": [
-                193,
-                255,
-                193
-            ]
-        },
-        {
-            "name": "単純X線",
-            "acronym": "XP",
-            "databasename": "xp",
-            "order": 6,
-            "target": true,
-            "color": [
-                255,
-                187,
-                119
-            ]
-        },
-        {
-            "name": "マンモグラフィ",
-            "acronym": "MG",
-            "databasename": "mg",
-            "order": 7,
-            "target": true,
-            "color": [
-                255,
-                115,
-                115
-            ]
-        },
-        {
-            "name": "マンモトーム",
-            "acronym": "MT",
-            "databasename": "mt",
-            "order": 8,
-            "target": true,
-            "color": [
-                255,
-                102,
-                102
-            ]
-        },
-        {
-            "name": "CT",
-            "acronym": "CT",
-            "databasename": "ct",
-            "order": 9,
-            "target": true,
-            "color": [
-                255,
-                203,
-                179
-            ]
-        },
-        {
-            "name": "MRXO",
-            "acronym": "XO",
-            "databasename": "xo",
-            "order": 10,
-            "target": true,
-            "color": [
-                145,
-                145,
-                255
-            ]
-        },
-        {
-            "name": "血管造影",
-            "acronym": "AG",
-            "databasename": "ag",
-            "order": 11,
-            "target": true,
-            "color": [
-                166,
-                214,
-                3
-            ]
-        },
-        {
-            "name": "フリー・予備",
-            "acronym": "FR",
-            "databasename": "fr",
-            "order": 12,
-            "target": true,
-            "color": [
-                128,
-                128,
-                128
-            ]
-        },
-        {
-            "name": "撮影助手",
-            "acronym": "AS",
-            "databasename": "as",
-            "order": 13,
-            "target": false,
-            "color": [
-                192,
-                192,
-                192
-            ]
-        },
-        {
-            "name": "その他",
-            "acronym": "ET",
-            "databasename": "et",
-            "order": 14,
-            "target": false,
-            "color": [
-                192,
-                192,
-                192
-            ]
-        }
-    ],
-    "Shifts": [
-        {
-            "order": 1,
-            "name": "休日",
-            "acronym": "休",
-            "color": [
-                192,
-                192,
-                192
-            ]
-        },
-        {
-            "name": "年休",
-            "acronym": "年",
-            "order": 2,
-            "color": [
-                255,
-                128,
-                255
-            ]
-        },
-        {
-            "name": "夏期休暇",
-            "acronym": "夏",
-            "order": 3,
-            "color": [
-                237,
-                176,
-                109
-            ]
-        },
-        {
-            "name": "特別休暇",
-            "acronym": "特",
-            "order": 4,
-            "color": [
-                255,
-                128,
-                64
-            ]
-        },
-        {
-            "name": "育児休暇",
-            "acronym": "育",
-            "order": 5,
-            "color": [
-                255,
-                128,
-                64
-            ]
-        },
-        {
-            "name": "産前産後休暇",
-            "acronym": "産",
-            "order": 6,
-            "color": [
-                255,
-                128,
-                64
-            ]
-        },
-        {
-            "name": "忌引き",
-            "acronym": "忌",
-            "order": 7,
-            "color": [
-                255,
-                128,
-                64
-            ]
-        },
-        {
-            "name": "半年休",
-            "acronym": "半",
-            "order": 8,
-            "color": [
-                238,
-                199,
-                239
-            ]
-        },
-        {
-            "name": "出張",
-            "acronym": "張",
-            "order": 9,
-            "color": [
-                128,
-                128,
-                255
-            ]
-        },
-        {
-            "name": "入力禁止",
-            "acronym": "☓",
-            "order": 10,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "Angio夜勤",
-            "acronym": "A夜",
-            "order": 11,
-            "color": [
-                128,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "MRI夜勤",
-            "acronym": "M夜",
-            "order": 12,
-            "color": [
-                128,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "CT夜勤",
-            "acronym": "C夜",
-            "order": 13,
-            "color": [
-                128,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "Angio日勤",
-            "acronym": "A日",
-            "order": 14,
-            "color": [
-                255,
-                255,
-                128
-            ]
-        },
-        {
-            "name": "MRI日勤",
-            "acronym": "M日",
-            "order": 15,
-            "color": [
-                255,
-                255,
-                128
-            ]
-        },
-        {
-            "name": "CT日勤",
-            "acronym": "C日",
-            "order": 16,
-            "color": [
-                255,
-                255,
-                128
-            ]
-        },
-        {
-            "name": "Free日勤",
-            "acronym": "F日",
-            "order": 17,
-            "color": [
-                255,
-                255,
-                128
-            ]
-        },
-        {
-            "name": "夜勤明け",
-            "acronym": "明",
-            "order": 18,
-            "color": [
-                0,
-                255,
-                128
-            ]
-        },
-        {
-            "name": "放射線治療",
-            "acronym": "RT",
-            "order": 19,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "MRI",
-            "acronym": "MR",
-            "order": 20,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "X線TV",
-            "acronym": "TV",
-            "order": 21,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "健診",
-            "acronym": "KS",
-            "order": 22,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "核医学",
-            "acronym": "NM",
-            "order": 23,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "単純X線",
-            "acronym": "XP",
-            "order": 24,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "マンモグラフィ",
-            "acronym": "MG",
-            "order": 25,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "マンモトーム",
-            "acronym": "MT",
-            "order": 26,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "CT",
-            "acronym": "CT",
-            "order": 27,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "MRXO",
-            "acronym": "XO",
-            "order": 28,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "血管造影",
-            "acronym": "AG",
-            "order": 29,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "フリー・予備",
-            "acronym": "FR",
-            "order": 30,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "撮影助手",
-            "acronym": "AS",
-            "order": 31,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        },
-        {
-            "name": "その他",
-            "acronym": "ET",
-            "order": 32,
-            "color": [
-                255,
-                255,
-                255
-            ]
-        }
-    ],
-    "ModalityConfigHeader": [
-        {
-            "order": 1,
-            "name": "放射線治療",
-            "acronym": "RT",
-            "databasename": "rt",
-            "searchStr": [
-                "rt"
-            ]
-        },
-        {
-            "name": "MRI",
-            "acronym": "MR",
-            "databasename": "mr",
-            "order": 2,
-            "searchStr": [
-                "mr"
-            ]
-        },
-        {
-            "name": "X線TV",
-            "acronym": "TV",
-            "databasename": "tv",
-            "order": 3,
-            "searchStr": [
-                "tv"
-            ]
-        },
-        {
-            "name": "健診",
-            "acronym": "KS",
-            "databasename": "ks",
-            "order": 4,
-            "searchStr": [
-                "ks"
-            ]
-        },
-        {
-            "name": "核医学",
-            "acronym": "NM",
-            "databasename": "nm",
-            "order": 5,
-            "searchStr": [
-                "nm"
-            ]
-        },
-        {
-            "name": "単純X線",
-            "acronym": "XP",
-            "databasename": "xp",
-            "order": 6,
-            "searchStr": [
-                "xp"
-            ]
-        },
-        {
-            "name": "マンモグラフィ",
-            "acronym": "MG",
-            "databasename": "mg",
-            "order": 7,
-            "searchStr": [
-                "mg"
-            ]
-        },
-        {
-            "name": "マンモトーム",
-            "acronym": "MT",
-            "databasename": "mt",
-            "order": 8,
-            "searchStr": [
-                "mt"
-            ]
-        },
-        {
-            "name": "CT",
-            "acronym": "CT",
-            "databasename": "ct",
-            "order": 9,
-            "searchStr": [
-                "ct"
-            ]
-        },
-        {
-            "name": "MRXO",
-            "acronym": "XO",
-            "databasename": "xo",
-            "order": 10,
-            "searchStr": [
-                "xo"
-            ]
-        },
-        {
-            "name": "血管造影",
-            "acronym": "AG",
-            "databasename": "ag",
-            "order": 11,
-            "searchStr": [
-                "ag"
-            ]
-        },
-        {
-            "name": "フリー・予備",
-            "acronym": "FR",
-            "databasename": "fr",
-            "order": 12,
-            "searchStr": [
-                "fr"
-            ]
-        },
-        {
-            "name": "入明",
-            "acronym": "NS",
-            "databasename": "ns",
-            "order": 13,
-            "searchStr": [
-                "A夜",
-                "M夜",
-                "C夜",
-                "A日",
-                "M日",
-                "C日",
-                "F日",
-                "明"
-            ]
-        },
-        {
-            "name": "出張",
-            "acronym": "BT",
-            "databasename": "bt",
-            "order": 14,
-            "searchStr": [
-                "張"
-            ]
-        },
-        {
-            "name": "休日",
-            "acronym": "DayOff",
-            "databasename": "dayoff",
-            "order": 15,
-            "searchStr": [
-                "休"
-            ]
-        },
-        {
-            "name": "休暇",
-            "acronym": "Holiday",
-            "databasename": "ho",
-            "order": 16,
-            "searchStr": [
-                "特",
-                "夏",
-                "年",
-                "忌",
-                "育",
-                "産"
-            ]
-        },
-        {
-            "name": "半休",
-            "acronym": "Half",
-            "databasename": "half",
-            "order": 17,
-            "searchStr": [
-                "半"
-            ]
-        }
-    ],
-    "WorkCountHeader": [
-        {
-            "order": 1,
-            "name": "休日",
-            "acronym": "休",
-            "searchStr": [
-                "休",
-                "振"
-            ]
-        },
-        {
-            "name": "年休",
-            "acronym": "年",
-            "order": 2,
-            "searchStr": [
-                "年"
-            ]
-        },
-        {
-            "name": "半年休",
-            "acronym": "半",
-            "order": 3,
-            "searchStr": [
-                "半"
-            ]
-        },
-        {
-            "name": "夏季休暇",
-            "acronym": "夏",
-            "order": 4,
-            "searchStr": [
-                "夏"
-            ]
-        },
-        {
-            "name": "特別休暇",
-            "acronym": "特",
-            "order": 5,
-            "searchStr": [
-                "特",
-                "忌",
-                "育",
-                "産"
-            ]
-        },
-        {
-            "name": "出張",
-            "acronym": "張",
-            "order": 6,
-            "searchStr": [
-                "張"
-            ]
-        },
-        {
-            "name": "夜勤",
-            "acronym": "夜",
-            "order": 7,
-            "searchStr": [
-                "A夜",
-                "M夜",
-                "C夜"
-            ]
-        },
-        {
-            "name": "日勤（休診日）",
-            "acronym": "日",
-            "order": 8,
-            "searchStr": [
-                "A日",
-                "M日",
-                "C日",
-                "F日"
-            ]
-        }
-    ],
-    "Skills": [
-        {
-            "order": 1,
-            "name": "放射線治療",
-            "acronym": "RT",
-            "databasename": "rt",
-            "status": "日勤",
-            "color": [
-                200,
-                250,
-                250
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎",
-                "□"
-            ]
-        },
-        {
-            "name": "MRI",
-            "acronym": "MR",
-            "databasename": "mr",
-            "status": "日勤",
-            "order": 2,
-            "color": [
-                255,
-                255,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎"
-            ]
-        },
-        {
-            "name": "X線TV",
-            "acronym": "TV",
-            "databasename": "tv",
-            "status": "日勤",
-            "order": 3,
-            "color": [
-                200,
-                250,
-                250
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎"
-            ]
-        },
-        {
-            "name": "健診",
-            "acronym": "KS",
-            "databasename": "ks",
-            "status": "日勤",
-            "order": 4,
-            "color": [
-                255,
-                255,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎"
-            ]
-        },
-        {
-            "name": "核医学",
-            "acronym": "NM",
-            "databasename": "nm",
-            "status": "日勤",
-            "order": 5,
-            "color": [
-                200,
-                250,
-                250
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎"
-            ]
-        },
-        {
-            "name": "単純X線",
-            "acronym": "XP",
-            "databasename": "xp",
-            "status": "日勤",
-            "order": 6,
-            "color": [
-                255,
-                255,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎"
-            ]
-        },
-        {
-            "name": "マンモグラフィ",
-            "acronym": "MG",
-            "databasename": "mg",
-            "order": 7,
-            "status": "日勤",
-            "color": [
-                200,
-                250,
-                250
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎"
-            ]
-        },
-        {
-            "name": "マンモトーム",
-            "acronym": "MT",
-            "databasename": "mt",
-            "order": 8,
-            "status": "日勤",
-            "color": [
-                255,
-                255,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎"
-            ]
-        },
-        {
-            "name": "CT",
-            "acronym": "CT",
-            "databasename": "ct",
-            "order": 9,
-            "status": "日勤",
-            "color": [
-                200,
-                250,
-                250
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎"
-            ]
-        },
-        {
-            "name": "MRXO",
-            "acronym": "XO",
-            "databasename": "xo",
-            "order": 10,
-            "status": "日勤",
-            "color": [
-                255,
-                255,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎"
-            ]
-        },
-        {
-            "name": "血管造影",
-            "acronym": "AG",
-            "databasename": "ag",
-            "order": 11,
-            "status": "日勤",
-            "color": [
-                200,
-                250,
-                250
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇",
-                "◎"
-            ]
-        },
-        {
-            "name": "ポータブル",
-            "acronym": "PO",
-            "databasename": "po",
-            "order": 12,
-            "status": "日勤",
-            "color": [
-                255,
-                255,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇"
-            ]
-        },
-        {
-            "name": "O-arm",
-            "acronym": "OA",
-            "databasename": "oa",
-            "order": 13,
-            "status": "日勤",
-            "color": [
-                200,
-                250,
-                250
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇"
-            ]
-        },
-        {
-            "name": "Zeego",
-            "acronym": "ZG",
-            "databasename": "zg",
-            "order": 14,
-            "status": "日勤",
-            "color": [
-                255,
-                255,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "△",
-                "〇"
-            ]
-        },
-        {
-            "name": "血管造影(夜勤)",
-            "acronym": "AG",
-            "databasename": "ag",
-            "order": 15,
-            "status": "夜勤",
-            "color": [
-                255,
-                255,
-                200
-            ],
-            "searchStr": [
-                "×",
-                "〇"
-            ]
-        },
-        {
-            "name": "MRI(夜勤)",
-            "acronym": "MR",
-            "databasename": "mr",
-            "order": 16,
-            "status": "夜勤",
-            "color": [
-                255,
-                255,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "〇"
-            ]
-        },
-        {
-            "name": "CT(夜勤)",
-            "acronym": "CT",
-            "databasename": "ct",
-            "order": 17,
-            "status": "夜勤",
-            "color": [
-                255,
-                255,
-                200
-            ],
-            "searchStr": [
-                "×",
-                "〇"
-            ]
-        },
-        {
-            "name": "血管造影(休)",
-            "acronym": "AG",
-            "databasename": "ag",
-            "order": 18,
-            "status": "休日勤",
-            "color": [
-                200,
-                200,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "〇"
-            ]
-        },
-        {
-            "name": "MRI(休)",
-            "acronym": "MR",
-            "databasename": "mr",
-            "order": 19,
-            "status": "休日勤",
-            "color": [
-                255,
-                255,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "〇"
-            ]
-        },
-        {
-            "name": "CT(休)",
-            "acronym": "CT",
-            "databasename": "ct",
-            "order": 20,
-            "status": "休日勤",
-            "color": [
-                200,
-                200,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "〇"
-            ]
-        },
-        {
-            "name": "Free(休)",
-            "acronym": "FR",
-            "databasename": "fr",
-            "order": 21,
-            "status": "休日勤",
-            "color": [
-                255,
-                255,
-                255
-            ],
-            "searchStr": [
-                "×",
-                "〇"
-            ]
-        }
-    ],
-    "SkillTypes": [
-        {
-            "order": 1,
-            "name": "出来ない",
-            "acronym": "×",
-            "databasename": 0
-        },
-        {
-            "order": 2,
-            "name": "習得中",
-            "acronym": "△",
-            "databasename": 1
-        },
-        {
-            "order": 3,
-            "name": "できる",
-            "acronym": "〇",
-            "databasename": 2
-        },
-        {
-            "order": 4,
-            "name": "とてもできる",
-            "acronym": "◎",
-            "databasename": 6
-        }
-    ],
-    "Registers": [
-        {
-            "order": 1,
-            "name": "表示フラグ",
-            "databasename": "disp",
-            "init": "ON"
-        },
-        {
-            "order": 2,
-            "name": "管理番号",
-            "databasename": "uid",
-            "init": 9999
-        },
-        {
-            "order": 3,
-            "name": "職員番号",
-            "databasename": "id",
-            "init": "999999"
-        },
-        {
-            "order": 4,
-            "name": "氏名",
-            "databasename": "staffname",
-            "init": "東海太郎"
-        },
-        {
-            "order": 5,
-            "name": "電話番号",
-            "databasename": "phone",
-            "init": "***-****-****"
-        },
-        {
-            "order": 6,
-            "name": "勤務形態",
-            "databasename": "status",
-            "init": 1
-        },
-        {
-            "order": 7,
-            "name": "権限",
-            "databasename": "authority",
-            "init": 1
-        },
-        {
-            "order": 8,
-            "name": "役職",
-            "databasename": "post",
-            "init": 0
-        },
-        {
-            "order": 9,
-            "name": "備考",
-            "databasename": "comment",
-            "init": "特になし"
-        }
-    ],
-    "WorkingGroups": [
-        {
-            "order": 1,
-            "name": "被ばく",
-            "acronym": "被ばく1",
-            "databasename": "被ばく",
-            "color": [
-                255,
-                170,
-                127
-            ]
-        },
-        {
-            "order": 2,
-            "name": "医療安全",
-            "acronym": "医療安全",
-            "databasename": "医療安全",
-            "color": [
-                170,
-                255,
-                255
-            ]
-        },
-        {
-            "order": 3,
-            "name": "システム",
-            "acronym": "システム",
-            "databasename": "システム",
-            "color": [
-                170,
-                255,
-                127
-            ]
-        },
-        {
-            "order": 4,
-            "name": "装置管理",
-            "acronym": "装置管理",
-            "databasename": "装置管理",
-            "color": [
-                255,
-                170,
-                255
-            ]
-        },
-        {
-            "order": 5,
-            "name": "業務改善",
-            "acronym": "業務改善",
-            "databasename": "業務改善",
-            "color": [
-                255,
-                255,
-                127
-            ]
-        }
-    ]
+    "Modalities": {
+        "description": "勤務表で扱う所属モダリティを定義\norder：モダリティの並び順\ntarget：勤務表上で1日の勤務カウントの対象となるモダリティを設定\nregular：夜勤作成時にモダリティに必要な正規配属スタッフの割合を定義\ncore：夜勤作成時にモダリティに必要な責任者クラススタッフの人数を定義\n",
+        "data": [
+            {
+                "order": 1,
+                "name": "放射線治療",
+                "acronym": "RT",
+                "target": "True",
+                "color": [
+                    125,
+                    255,
+                    255
+                ],
+                "regular": 0.5,
+                "core": 1,
+                "remarks": "放射線治療:定数10人",
+                "min_skill_score": 40,
+                "min_skill_count": 1
+            },
+            {
+                "order": 2,
+                "name": "MRI",
+                "acronym": "MR",
+                "target": "True",
+                "color": [
+                    160,
+                    214,
+                    255
+                ],
+                "remarks": "",
+                "regular": 0.5,
+                "core": 2,
+                "min_skill_score": 40,
+                "min_skill_count": 4
+            },
+            {
+                "order": 3,
+                "name": "X線TV",
+                "acronym": "TV",
+                "target": "True",
+                "color": [
+                    58,
+                    143,
+                    255
+                ],
+                "remarks": "",
+                "regular": 0.5,
+                "core": 1,
+                "min_skill_score": 40,
+                "min_skill_count": 1
+            },
+            {
+                "order": 4,
+                "name": "健診",
+                "acronym": "KS",
+                "target": "True",
+                "color": [
+                    140,
+                    142,
+                    255
+                ],
+                "remarks": "",
+                "regular": 0.5,
+                "core": 1,
+                "min_skill_score": 40,
+                "min_skill_count": 1
+            },
+            {
+                "order": 5,
+                "name": "核医学",
+                "acronym": "NM",
+                "target": "True",
+                "color": [
+                    62,
+                    173,
+                    60
+                ],
+                "remarks": "",
+                "regular": 0.5,
+                "core": 1,
+                "min_skill_score": 40,
+                "min_skill_count": 1
+            },
+            {
+                "order": 6,
+                "name": "単純X線",
+                "acronym": "XP",
+                "target": "True",
+                "color": [
+                    255,
+                    157,
+                    19
+                ],
+                "remarks": "",
+                "regular": 0.5,
+                "core": 2,
+                "min_skill_score": 40,
+                "min_skill_count": 2
+            },
+            {
+                "order": 7,
+                "name": "マンモグラフィ",
+                "acronym": "MG",
+                "target": "True",
+                "color": [
+                    255,
+                    0,
+                    0
+                ],
+                "remarks": "",
+                "regular": 0,
+                "core": 0,
+                "min_skill_score": 40,
+                "min_skill_count": 0
+            },
+            {
+                "order": 8,
+                "name": "マンモトーム",
+                "acronym": "MT",
+                "target": "True",
+                "color": [
+                    170,
+                    0,
+                    0
+                ],
+                "remarks": "",
+                "regular": 0,
+                "core": 0,
+                "min_skill_score": 40,
+                "min_skill_count": 0
+            },
+            {
+                "order": 9,
+                "name": "CT",
+                "acronym": "CT",
+                "target": "True",
+                "color": [
+                    249,
+                    215,
+                    255
+                ],
+                "remarks": "",
+                "regular": 0.5,
+                "core": 1,
+                "min_skill_score": 40,
+                "min_skill_count": 4
+            },
+            {
+                "order": 10,
+                "name": "MRXO",
+                "acronym": "XO",
+                "target": "True",
+                "color": [
+                    255,
+                    165,
+                    177
+                ],
+                "remarks": "",
+                "regular": 0.4,
+                "core": 1,
+                "min_skill_score": 40,
+                "min_skill_count": 2
+            },
+            {
+                "order": 11,
+                "name": "血管造影",
+                "acronym": "AG",
+                "target": "True",
+                "color": [
+                    255,
+                    252,
+                    160
+                ],
+                "remarks": "",
+                "regular": 0.7,
+                "core": 1,
+                "min_skill_score": 40,
+                "min_skill_count": 3
+            },
+            {
+                "order": 12,
+                "name": "フリー・予備",
+                "acronym": "FR",
+                "target": "True",
+                "color": [
+                    128,
+                    128,
+                    128
+                ],
+                "remarks": "",
+                "regular": 0,
+                "core": 0,
+                "min_skill_score": 40,
+                "min_skill_count": 0
+            },
+            {
+                "order": 13,
+                "name": "撮影助手",
+                "acronym": "AS",
+                "target": "False",
+                "color": [
+                    192,
+                    192,
+                    192
+                ],
+                "regular": 0,
+                "remarks": "",
+                "core": 0,
+                "min_skill_score": 40,
+                "min_skill_count": 0
+            },
+            {
+                "order": 14,
+                "name": "その他",
+                "acronym": "ET",
+                "target": "False",
+                "color": [
+                    192,
+                    192,
+                    192
+                ],
+                "regular": 0,
+                "remarks": "",
+                "core": 0,
+                "min_skill_score": 40,
+                "min_skill_count": 0
+            }
+        ]
+    },
+    "Shifts": {
+        "description": "勤務表に適用する勤務名を定義\norder：入力フォームの表示順\nacronym：略語→データベースで管理するwordとなる\nworkdict：夜勤作成時に変換される文字列→PulpItemsで定義されている文字列を当てはめる\n\n",
+        "data": [
+            {
+                "order": 1,
+                "name": "休日",
+                "acronym": "休",
+                "workdict": "休",
+                "color": [
+                    192,
+                    192,
+                    192
+                ],
+                "remarks": "取得しなければならない休み"
+            },
+            {
+                "order": 2,
+                "name": "年休",
+                "acronym": "年",
+                "workdict": "暇",
+                "color": [
+                    255,
+                    128,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 3,
+                "name": "夏期休暇",
+                "acronym": "夏",
+                "workdict": "暇",
+                "color": [
+                    237,
+                    176,
+                    109
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 4,
+                "name": "特別休暇",
+                "acronym": "特",
+                "workdict": "暇",
+                "color": [
+                    255,
+                    128,
+                    64
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 5,
+                "name": "育児休暇",
+                "acronym": "育",
+                "workdict": "暇",
+                "color": [
+                    255,
+                    128,
+                    64
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 6,
+                "name": "産前産後休暇",
+                "acronym": "産",
+                "workdict": "暇",
+                "color": [
+                    255,
+                    128,
+                    64
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 7,
+                "name": "忌引き",
+                "acronym": "忌",
+                "workdict": "暇",
+                "color": [
+                    255,
+                    128,
+                    64
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 8,
+                "name": "半年休",
+                "acronym": "半",
+                "workdict": "日",
+                "color": [
+                    238,
+                    199,
+                    239
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 9,
+                "name": "出張",
+                "acronym": "張",
+                "workdict": "他",
+                "color": [
+                    128,
+                    128,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 10,
+                "name": "入力禁止",
+                "acronym": "×",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": "平日のみ入力可能。休日の入力禁止は「休日」を入力"
+            },
+            {
+                "order": 11,
+                "name": "休日希望",
+                "acronym": "希",
+                "workdict": "希",
+                "color": [
+                    0,
+                    170,
+                    127
+                ],
+                "remarks": "remarks"
+            },
+            {
+                "order": 12,
+                "name": "夜勤希望",
+                "acronym": "夜希",
+                "workdict": "希",
+                "color": [
+                    1,
+                    179,
+                    255
+                ],
+                "remarks": "remarks"
+            },
+            {
+                "order": 13,
+                "name": "Angio夜勤",
+                "acronym": "A夜",
+                "workdict": "A夜",
+                "color": [
+                    128,
+                    255,
+                    255
+                ]
+            },
+            {
+                "order": 14,
+                "name": "MRI夜勤",
+                "acronym": "M夜",
+                "workdict": "M夜",
+                "color": [
+                    128,
+                    255,
+                    255
+                ]
+            },
+            {
+                "name": "CT夜勤",
+                "acronym": "C夜",
+                "workdict": "C夜",
+                "color": [
+                    128,
+                    255,
+                    255
+                ],
+                "order": 15
+            },
+            {
+                "order": 16,
+                "name": "Angio日勤",
+                "acronym": "A日",
+                "workdict": "A日",
+                "color": [
+                    255,
+                    255,
+                    128
+                ]
+            },
+            {
+                "order": 17,
+                "name": "MRI日勤",
+                "acronym": "M日",
+                "workdict": "M日",
+                "color": [
+                    255,
+                    255,
+                    128
+                ]
+            },
+            {
+                "order": 18,
+                "name": "CT日勤",
+                "acronym": "C日",
+                "workdict": "C日",
+                "color": [
+                    255,
+                    255,
+                    128
+                ]
+            },
+            {
+                "order": 19,
+                "name": "Free日勤",
+                "acronym": "F日",
+                "workdict": "F日",
+                "color": [
+                    255,
+                    255,
+                    128
+                ]
+            },
+            {
+                "order": 20,
+                "name": "夜勤明け",
+                "acronym": "明",
+                "workdict": "明",
+                "color": [
+                    170,
+                    255,
+                    127
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 21,
+                "name": "放射線治療",
+                "acronym": "RT",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 22,
+                "name": "MRI",
+                "acronym": "MR",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 23,
+                "name": "X線TV",
+                "acronym": "TV",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 24,
+                "name": "健診",
+                "acronym": "KS",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 25,
+                "name": "核医学",
+                "acronym": "NM",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 26,
+                "name": "単純X線",
+                "acronym": "XP",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 27,
+                "name": "マンモグラフィ",
+                "acronym": "MG",
+                "workdict": "日",
+                "color": [
+                    221,
+                    219,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 28,
+                "name": "マンモトーム",
+                "acronym": "MT",
+                "workdict": "日",
+                "color": [
+                    198,
+                    208,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 29,
+                "name": "CT",
+                "acronym": "CT",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 30,
+                "name": "MRXO",
+                "acronym": "XO",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 31,
+                "name": "血管造影",
+                "acronym": "AG",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 32,
+                "name": "フリー・予備",
+                "acronym": "FR",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 33,
+                "name": "撮影助手",
+                "acronym": "AS",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 34,
+                "name": "その他",
+                "acronym": "ET",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": ""
+            },
+            {
+                "order": 35,
+                "name": "勤務",
+                "acronym": "日",
+                "workdict": "日",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "remarks": "remarks"
+            }
+        ]
+    },
+    "WorkCountHeader": {
+        "description": "勤務表における個人の勤務回数を定義\norder：月・年間勤務回数のヘッダーの並び順\nsearchStr：カウントの対象となるシフト文字列→複数記述する場合は、カンマで区切る\n\n",
+        "data": [
+            {
+                "order": 1,
+                "name": "休日",
+                "acronym": "休",
+                "searchStr": [
+                    "休",
+                    "振"
+                ],
+                "remarks": "備考"
+            },
+            {
+                "name": "年休",
+                "acronym": "年",
+                "order": 2,
+                "searchStr": [
+                    "年"
+                ]
+            },
+            {
+                "name": "半年休",
+                "acronym": "半",
+                "order": 3,
+                "searchStr": [
+                    "半"
+                ]
+            },
+            {
+                "name": "夏季休暇",
+                "acronym": "夏",
+                "order": 4,
+                "searchStr": [
+                    "夏"
+                ]
+            },
+            {
+                "name": "特別休暇",
+                "acronym": "特",
+                "order": 5,
+                "searchStr": [
+                    "特",
+                    "忌",
+                    "育",
+                    "産"
+                ]
+            },
+            {
+                "name": "出張",
+                "acronym": "張",
+                "order": 6,
+                "searchStr": [
+                    "張"
+                ]
+            },
+            {
+                "name": "夜勤",
+                "acronym": "夜",
+                "order": 7,
+                "searchStr": [
+                    "A夜",
+                    "M夜",
+                    "C夜"
+                ]
+            },
+            {
+                "name": "日勤（休診日）",
+                "acronym": "日",
+                "order": 8,
+                "searchStr": [
+                    "A日",
+                    "M日",
+                    "C日",
+                    "F日"
+                ]
+            }
+        ]
+    },
+    "ModalityConfigHeader": {
+        "description": "モダリティ設定人数を定義\norder：表示順\nsearchStr：各勤務におけるカウントの対象となるシフト文字列を定義→複数定義する場合は、カンマで区切る\n※カウントの対象は’Modalities’のtargetでTrueに設定されているモダリティに所属しているスタッフのみ",
+        "data": [
+            {
+                "order": 1,
+                "name": "放射線治療",
+                "acronym": "RT",
+                "searchStr": [
+                    "RT"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": "設定人数"
+            },
+            {
+                "name": "MRI",
+                "acronym": "MR",
+                "order": 2,
+                "searchStr": [
+                    "MR"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "X線TV",
+                "acronym": "TV",
+                "order": 3,
+                "searchStr": [
+                    "TV"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "健診",
+                "acronym": "KS",
+                "order": 4,
+                "searchStr": [
+                    "KS"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "核医学",
+                "acronym": "NM",
+                "order": 5,
+                "searchStr": [
+                    "NM"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "単純X線",
+                "acronym": "XP",
+                "order": 6,
+                "searchStr": [
+                    "XP"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "マンモグラフィ",
+                "acronym": "MG",
+                "order": 7,
+                "searchStr": [
+                    "MG"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "マンモトーム",
+                "acronym": "MT",
+                "order": 8,
+                "searchStr": [
+                    "MT"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "CT",
+                "acronym": "CT",
+                "order": 9,
+                "searchStr": [
+                    "CT"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "MRXO",
+                "acronym": "XO",
+                "order": 10,
+                "searchStr": [
+                    "XO"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "血管造影",
+                "acronym": "AG",
+                "order": 11,
+                "searchStr": [
+                    "AG"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "フリー・予備",
+                "acronym": "FR",
+                "order": 12,
+                "searchStr": [
+                    "FR"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "入明",
+                "acronym": "NS",
+                "order": 13,
+                "searchStr": [
+                    "A夜",
+                    "M夜",
+                    "C夜",
+                    "A日",
+                    "M日",
+                    "C日",
+                    "F日",
+                    "明"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "他勤(出張など)",
+                "acronym": "他",
+                "order": 14,
+                "searchStr": [
+                    "張",
+                    "援"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            },
+            {
+                "name": "休日",
+                "acronym": "休",
+                "order": 15,
+                "searchStr": [
+                    "休"
+                ],
+                "isSubstituteDayoff": "assigned",
+                "remarks": ""
+            },
+            {
+                "name": "休暇",
+                "acronym": "暇",
+                "order": 16,
+                "searchStr": [
+                    "特",
+                    "夏",
+                    "年",
+                    "忌",
+                    "育",
+                    "産"
+                ],
+                "isSubstituteDayoff": "holiday",
+                "remarks": ""
+            },
+            {
+                "name": "半休",
+                "acronym": "半",
+                "order": 17,
+                "searchStr": [
+                    "半"
+                ],
+                "isSubstituteDayoff": "required",
+                "remarks": ""
+            }
+        ]
+    },
+    "Skills": {
+        "description": "スタッフの各勤務における習熟度を定義\nacronym：データベースに反映させる文字列\n　　　　　　ほかの勤務と文字列が重複しないこと\n　　　　　　他コンボボックスのacronymと同じ書体とする\nstatus：勤務の形式を定義。現在は日勤・夜勤・休日勤（休診日日勤）\nsearchStr：勤務表で対象の勤務が設定できるスキルスコアを定義。\n※スキルスコアはコンボボックスSkillTypesで定義\n※データベースに反映するスキルスコアは文字列ではなく数値となっている",
+        "data": [
+            {
+                "order": 1,
+                "name": "放射線治療",
+                "acronym": "RT",
+                "status": "日勤",
+                "color": [
+                    170,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "▲",
+                    "〇",
+                    "●",
+                    "★",
+                    "◎"
+                ],
+                "remarks": "備考"
+            },
+            {
+                "name": "MRI",
+                "acronym": "MR",
+                "status": "日勤",
+                "order": 2,
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "▲",
+                    "〇",
+                    "●",
+                    "★",
+                    "◎"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "X線TV",
+                "acronym": "TV",
+                "status": "日勤",
+                "order": 3,
+                "color": [
+                    170,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "▲",
+                    "〇",
+                    "●",
+                    "★",
+                    "◎"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "健診",
+                "acronym": "KS",
+                "status": "日勤",
+                "order": 4,
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "▲",
+                    "〇",
+                    "●",
+                    "★",
+                    "◎"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "核医学",
+                "acronym": "NM",
+                "status": "日勤",
+                "order": 5,
+                "color": [
+                    170,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "▲",
+                    "〇",
+                    "●",
+                    "★",
+                    "◎"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "単純X線",
+                "acronym": "XP",
+                "status": "日勤",
+                "order": 6,
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "▲",
+                    "〇",
+                    "●",
+                    "★",
+                    "◎"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "CT",
+                "acronym": "CT",
+                "order": 7,
+                "status": "日勤",
+                "color": [
+                    170,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "▲",
+                    "〇",
+                    "●",
+                    "★",
+                    "◎"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "MRXO",
+                "acronym": "XO",
+                "order": 8,
+                "status": "日勤",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "▲",
+                    "〇",
+                    "●",
+                    "★",
+                    "◎"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "血管造影",
+                "acronym": "AG",
+                "order": 9,
+                "status": "日勤",
+                "color": [
+                    170,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "▲",
+                    "〇",
+                    "●",
+                    "★",
+                    "◎"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "ポータブル",
+                "acronym": "PO",
+                "order": 10,
+                "status": "日勤",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "〇"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "マンモグラフィ",
+                "acronym": "MG",
+                "order": 11,
+                "status": "日勤",
+                "color": [
+                    170,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "〇",
+                    "◎"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "マンモトーム",
+                "acronym": "MT",
+                "order": 12,
+                "status": "日勤",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "△",
+                    "〇",
+                    "◎"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "血管造影(夜勤)",
+                "acronym": "A夜",
+                "order": 13,
+                "status": "夜勤",
+                "color": [
+                    255,
+                    255,
+                    200
+                ],
+                "searchStr": [
+                    "×",
+                    "〇"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "MRI(夜勤)",
+                "acronym": "M夜",
+                "order": 14,
+                "status": "夜勤",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "〇"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "CT(夜勤)",
+                "acronym": "C夜",
+                "order": 15,
+                "status": "夜勤",
+                "color": [
+                    255,
+                    255,
+                    200
+                ],
+                "searchStr": [
+                    "×",
+                    "〇"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "血管造影(休)",
+                "acronym": "A日",
+                "order": 16,
+                "status": "休日勤",
+                "color": [
+                    200,
+                    200,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "〇"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "MRI(休)",
+                "acronym": "M日",
+                "order": 17,
+                "status": "休日勤",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "〇"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "CT(休)",
+                "acronym": "C日",
+                "order": 18,
+                "status": "休日勤",
+                "color": [
+                    200,
+                    200,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "〇"
+                ],
+                "remarks": ""
+            },
+            {
+                "name": "Free(休)",
+                "acronym": "F日",
+                "order": 19,
+                "status": "休日勤",
+                "color": [
+                    255,
+                    255,
+                    255
+                ],
+                "searchStr": [
+                    "×",
+                    "〇"
+                ],
+                "remarks": ""
+            }
+        ]
+    },
+    "SkillTypes": {
+        "description": "スキルスコアの定義\nacronym：コンボボックスSkillsで入力できる文字列を定義\ndatabasename：データベースに登録される数値を定義\n\n※\nスキルスコアの数値は２桁で定義\nできない　→１０番台\n停止中　→　２０番台\n習得中　→　３０番台\nできる　→　４０番台",
+        "data": [
+            {
+                "order": 1,
+                "name": "出来ない",
+                "acronym": "×",
+                "databasename": 10
+            },
+            {
+                "order": 2,
+                "name": "停止中",
+                "acronym": "□",
+                "databasename": 20
+            },
+            {
+                "order": 3,
+                "name": "習得中",
+                "acronym": "△",
+                "databasename": 31
+            },
+            {
+                "order": 4,
+                "name": "習得中(希望)",
+                "acronym": "▲",
+                "databasename": 32
+            },
+            {
+                "order": 5,
+                "name": "できる",
+                "acronym": "〇",
+                "databasename": 40
+            },
+            {
+                "order": 6,
+                "name": "できる(希望)",
+                "acronym": "●",
+                "databasename": 41
+            },
+            {
+                "order": 7,
+                "name": "できる(固定)",
+                "acronym": "★",
+                "databasename": 42
+            },
+            {
+                "order": 8,
+                "name": "できる(コア)",
+                "acronym": "◎",
+                "databasename": 43
+            }
+        ]
+    },
+    "Registers": {
+        "description": "スタッフ登録を定義\ndatabasename：データベースshifttable.accdbのtblStaffのフィールド名\ninit：登録時の初期化名",
+        "data": [
+            {
+                "order": 1,
+                "name": "表示フラグ",
+                "databasename": "disp",
+                "init": "ON"
+            },
+            {
+                "order": 2,
+                "name": "管理番号",
+                "databasename": "uid",
+                "init": 9999
+            },
+            {
+                "order": 3,
+                "name": "職員番号",
+                "databasename": "id",
+                "init": "999999"
+            },
+            {
+                "order": 4,
+                "name": "氏名",
+                "databasename": "staffname",
+                "init": "東海太郎"
+            },
+            {
+                "order": 5,
+                "name": "電話番号",
+                "databasename": "phone",
+                "init": "***-****-****"
+            },
+            {
+                "order": 6,
+                "name": "勤務形態",
+                "databasename": "status",
+                "init": 1
+            },
+            {
+                "order": 7,
+                "name": "権限",
+                "databasename": "authority",
+                "init": 1
+            },
+            {
+                "order": 8,
+                "name": "役職",
+                "databasename": "post",
+                "init": 0
+            },
+            {
+                "order": 9,
+                "name": "備考",
+                "databasename": "comment",
+                "init": "特になし"
+            }
+        ]
+    },
+    "DailyTableModalities": {
+        "description": "業務配置表を定義\n各行要素は表示されるモダリティ\norder：表示順\nacronym：データベースへの取得および登録名\ntarget：業務配置表に表示するためのフラグ\n　　　　true→業務配置表に表示\n        false→業務配置表に非表示。ただし利用可能なスタッフリストには表示する\nstaffs：各モダリティにおける入力可能な人数　→　変更すると入力できないスタッフが出てくる\nsearchStr：各モダリティにおけるグループ化したいモダリティ　→　複数ある場合は、カンマで区切る\ninputItems：業務配置の設定シートにおける各モダリティで設定できる入力アイテム数を定義",
+        "data": [
+            {
+                "order": 1,
+                "name": "単純X線",
+                "acronym": "XP",
+                "target": "True",
+                "staffs": 13,
+                "searchStr": [
+                    "XP",
+                    "MG",
+                    "MT"
+                ],
+                "inputItems": 40
+            },
+            {
+                "order": 2,
+                "name": "CT",
+                "acronym": "CT",
+                "target": true,
+                "staffs": 11,
+                "searchStr": [
+                    "CT"
+                ],
+                "inputItems": 40
+            },
+            {
+                "order": 3,
+                "name": "MRXO",
+                "acronym": "XO",
+                "target": true,
+                "staffs": 10,
+                "searchStr": [
+                    "XO"
+                ],
+                "inputItems": 40
+            },
+            {
+                "order": 4,
+                "name": "MRI",
+                "acronym": "MR",
+                "target": true,
+                "staffs": 11,
+                "searchStr": [
+                    "MR"
+                ],
+                "inputItems": 40
+            },
+            {
+                "order": 5,
+                "name": "X線TV",
+                "acronym": "TV",
+                "target": true,
+                "staffs": 6,
+                "searchStr": [
+                    "TV"
+                ],
+                "inputItems": 40
+            },
+            {
+                "order": 6,
+                "name": "健診",
+                "acronym": "KS",
+                "target": true,
+                "staffs": 8,
+                "searchStr": [
+                    "KS"
+                ],
+                "inputItems": 40
+            },
+            {
+                "order": 7,
+                "name": "血管造影",
+                "acronym": "AG",
+                "target": true,
+                "staffs": 10,
+                "searchStr": [
+                    "AG"
+                ],
+                "inputItems": 30
+            },
+            {
+                "order": 8,
+                "name": "核医学",
+                "acronym": "NM",
+                "target": true,
+                "staffs": 6,
+                "searchStr": [
+                    "NM"
+                ],
+                "inputItems": 30
+            },
+            {
+                "order": 9,
+                "name": "放射線治療",
+                "acronym": "RT",
+                "target": true,
+                "staffs": 13,
+                "searchStr": [
+                    "RT"
+                ],
+                "inputItems": 30
+            },
+            {
+                "order": 10,
+                "name": "フリー・予備",
+                "acronym": "FR",
+                "target": false,
+                "staffs": 10,
+                "searchStr": [
+                    "FR",
+                    "NF"
+                ],
+                "inputItems": 30
+            }
+        ]
+    },
+    "DailyTableTimeSchedule": {
+        "description": "業務配置表の時間設定\n",
+        "data": [
+            {
+                "order": 1,
+                "name": "7:30-8:00"
+            },
+            {
+                "order": 2,
+                "name": "8:00-9:00"
+            },
+            {
+                "order": 3,
+                "name": "9:00-10:00"
+            },
+            {
+                "order": 4,
+                "name": "10:00-11:00"
+            },
+            {
+                "order": 5,
+                "name": "11:00-12:00"
+            },
+            {
+                "order": 6,
+                "name": "12:00-13:00"
+            },
+            {
+                "order": 7,
+                "name": "13:00-14:00"
+            },
+            {
+                "order": 8,
+                "name": "14:00-15:00"
+            },
+            {
+                "order": 9,
+                "name": "15:00-16:00"
+            },
+            {
+                "order": 10,
+                "name": "16:00-17:00"
+            },
+            {
+                "order": 11,
+                "name": "17:00-18:00"
+            }
+        ]
+    },
+    "DailyTableNightShiftItems": {
+        "description": "業務配置表に表示する夜勤・休診日日勤・明けなどのシフト文字列を定義\n\n※この設定文字列とDailyTableModalitiesで定義されている文字列以外は休暇や出張などのグループに振り分けられる\n",
+        "data": [
+            {
+                "order": 1,
+                "name": "Angio夜勤",
+                "acronym": "A夜"
+            },
+            {
+                "order": 2,
+                "name": "MRI夜勤",
+                "acronym": "M夜"
+            },
+            {
+                "order": 3,
+                "name": "CT夜勤",
+                "acronym": "C夜"
+            },
+            {
+                "order": 4,
+                "name": "Angio日勤",
+                "acronym": "A日"
+            },
+            {
+                "order": 5,
+                "name": "MRI日勤",
+                "acronym": "M日"
+            },
+            {
+                "order": 6,
+                "name": "CT日勤",
+                "acronym": "C日"
+            },
+            {
+                "order": 7,
+                "name": "Free日勤",
+                "acronym": "F日"
+            },
+            {
+                "order": 8,
+                "name": "夜勤明け",
+                "acronym": "明"
+            }
+        ]
+    },
+    "DailyTableNightShiftAndDayoffItems": {
+        "description": "業務配置表に表示する夜勤・休診日日勤・明けなどのシフト文字列を定義\n\n※この設定文字列とDailyTableModalitiesで定義されている文字列以外は休暇や出張などのグループに振り分けられる\n",
+        "data": [
+            {
+                "order": 1,
+                "name": "夜勤グループ",
+                "acronym": "night",
+                "searchStr": [
+                    "A夜",
+                    "M夜",
+                    "C夜",
+                    "A日",
+                    "M日",
+                    "C日",
+                    "F日",
+                    "明",
+                    "出",
+                    "援"
+                ]
+            },
+            {
+                "order": 2,
+                "name": "休みグループ",
+                "acronym": "dayoff",
+                "searchStr": [
+                    "休",
+                    "年",
+                    "夏",
+                    "特",
+                    "育",
+                    "産",
+                    "忌"
+                ]
+            }
+        ]
+    },
+    "PulpVar": {
+        "description": "",
+        "data": [
+            {
+                "order": 1,
+                "name": "dummy係数",
+                "acronym": "coef_dummy",
+                "value": 10,
+                "type": "float",
+                "remarks": "夜勤明けに1日空けて夜勤を入れることのできる係数"
+            },
+            {
+                "order": 2,
+                "name": "2連休係数",
+                "acronym": "coef_two_consecutive_holidays",
+                "value": 0.1,
+                "type": "float",
+                "remarks": "連続で働くことのできる最大勤務日数"
+            },
+            {
+                "order": 3,
+                "name": "3連休係数",
+                "acronym": "coef_three_consecutive_holidays",
+                "value": 0.05,
+                "type": "float",
+                "remarks": "remarks"
+            },
+            {
+                "order": 4,
+                "name": "4連休係数",
+                "acronym": "coef_four_consecutive_holidays",
+                "value": 0.3,
+                "type": "float",
+                "remarks": "夜勤明けに2日空けて夜勤を入れることのできる係数"
+            },
+            {
+                "order": 5,
+                "name": "勤務間隔1日",
+                "acronym": "coef_work_interval1",
+                "value": 0.4,
+                "type": "float",
+                "remarks": "remarks"
+            },
+            {
+                "order": 6,
+                "name": "勤務間隔2日",
+                "acronym": "coef_work_interval2",
+                "value": 0.3,
+                "type": "float",
+                "remarks": "remarks"
+            },
+            {
+                "order": 7,
+                "name": "勤務間隔3日",
+                "acronym": "coef_work_interval3",
+                "value": 0.2,
+                "type": "float",
+                "remarks": "remarks"
+            },
+            {
+                "order": 8,
+                "name": "勤務間隔4日",
+                "acronym": "coef_work_interval4",
+                "value": 0.1,
+                "type": "float",
+                "remarks": "今のプログラムでは考慮していない。超過分は残業で補填"
+            },
+            {
+                "order": 9,
+                "name": "夜勤回数係数",
+                "acronym": "coef_works",
+                "value": 0.1,
+                "type": "float",
+                "remarks": "夜勤・休診日日勤の最大回数の制限"
+            },
+            {
+                "order": 10,
+                "name": "休診日休日係数",
+                "acronym": "coef_dayoff_on_close",
+                "value": 0.1,
+                "type": "float",
+                "remarks": "明けの翌日に夜勤を入れることのできる係数"
+            },
+            {
+                "order": 11,
+                "name": "振休係数",
+                "acronym": "coef_request_dayoff",
+                "value": 0.6,
+                "type": "float",
+                "remarks": "夜勤明けに1日空けて夜勤を入れることのできる係数"
+            },
+            {
+                "order": 12,
+                "name": "連続勤務上限",
+                "acronym": "consecutive_work_limit",
+                "value": 10,
+                "type": "integer",
+                "remarks": "夜勤明けに3日空けて夜勤を入れることのできる係数"
+            },
+            {
+                "order": 13,
+                "name": "連続勤務係数",
+                "acronym": "coef_consecutive_work_limit",
+                "value": 100,
+                "type": "float",
+                "remarks": "remarks"
+            },
+            {
+                "order": 14,
+                "name": "休診日日勤上限",
+                "acronym": "daily_work_limit",
+                "value": 2,
+                "type": "integer",
+                "remarks": "remarks"
+            },
+            {
+                "order": 15,
+                "name": "日勤上限回数係数",
+                "acronym": "coef_daily_work_limit",
+                "value": 100,
+                "type": "float",
+                "remarks": "remarks"
+            },
+            {
+                "order": 16,
+                "name": "夜勤上限",
+                "acronym": "night_work_limit",
+                "value": 3,
+                "type": "integer",
+                "remarks": "remarks"
+            },
+            {
+                "order": 17,
+                "name": "夜勤上限係数",
+                "acronym": "coef_night_work_limit",
+                "value": 100,
+                "type": "float",
+                "remarks": "remarks"
+            },
+            {
+                "order": 18,
+                "name": "休日係数",
+                "acronym": "coef_dayoff",
+                "value": 1000,
+                "type": "float",
+                "remarks": "休日回数が達成不可能な場合でもプログラムを稼働させるため"
+            },
+            {
+                "order": 19,
+                "name": "連続夜勤上限",
+                "acronym": "consecutive_night_work_limit",
+                "value": 3,
+                "type": "integer",
+                "remarks": "夜勤の連続回数の上限"
+            },
+            {
+                "order": 20,
+                "name": "連続夜勤係数",
+                "acronym": "coef_consecutive_night_work_limit",
+                "value": 100,
+                "type": "float",
+                "remarks": "夜勤の連続回数の荷重係数"
+            },
+            {
+                "order": 21,
+                "name": "計算時間",
+                "acronym": "calculation_time",
+                "value": 1000,
+                "type": "integer",
+                "remarks": "remarks"
+            }
+        ]
+    },
+    "PulpItems": {
+        "description": "",
+        "data": [
+            {
+                "order": 1,
+                "name": "血管造影(夜勤)",
+                "acronym": "A夜",
+                "target": true,
+                "dailyNight": "夜勤",
+                "staffsOnOpen": 1,
+                "staffsOnClose": 1,
+                "workType": "勤務",
+                "searchStr": [
+                    "A夜"
+                ],
+                "remarks": "夜勤におけるアンギオ担当者の人数を定義するための項目"
+            },
+            {
+                "order": 2,
+                "name": "MRI(夜勤)",
+                "acronym": "M夜",
+                "target": true,
+                "dailyNight": "夜勤",
+                "staffsOnOpen": 1,
+                "staffsOnClose": 1,
+                "workType": "勤務",
+                "searchStr": [
+                    "M夜"
+                ],
+                "remarks": "夜勤におけるMRI担当者の人数を定義するための項目"
+            },
+            {
+                "order": 3,
+                "name": "CT(夜勤)",
+                "acronym": "C夜",
+                "target": true,
+                "dailyNight": "夜勤",
+                "staffsOnOpen": 1,
+                "staffsOnClose": 1,
+                "workType": "勤務",
+                "searchStr": [
+                    "C夜"
+                ],
+                "remarks": "夜勤におけるCT担当者の人数を定義するための項目"
+            },
+            {
+                "order": 4,
+                "name": "血管造影(休)",
+                "acronym": "A日",
+                "target": true,
+                "dailyNight": "日勤",
+                "staffsOnOpen": 0,
+                "staffsOnClose": 1,
+                "workType": "勤務",
+                "searchStr": [
+                    "A日"
+                ],
+                "remarks": "target = データベースtblPulpAlpha_defaultの対象"
+            },
+            {
+                "order": 5,
+                "name": "MRI(休)",
+                "acronym": "M日",
+                "target": true,
+                "dailyNight": "日勤",
+                "staffsOnOpen": 0,
+                "staffsOnClose": 1,
+                "workType": "勤務",
+                "searchStr": [
+                    "M日"
+                ],
+                "remarks": "target = データベースtblPulpAlpha_defaultの対象"
+            },
+            {
+                "order": 6,
+                "name": "CT(休)",
+                "acronym": "C日",
+                "target": true,
+                "dailyNight": "日勤",
+                "staffsOnOpen": 0,
+                "staffsOnClose": 1,
+                "workType": "勤務",
+                "searchStr": [
+                    "C日"
+                ],
+                "remarks": "target = データベースtblPulpAlpha_defaultの対象"
+            },
+            {
+                "order": 7,
+                "name": "Free(休)",
+                "acronym": "F日",
+                "target": true,
+                "dailyNight": "日勤",
+                "staffsOnOpen": 0,
+                "staffsOnClose": 2,
+                "workType": "勤務",
+                "searchStr": [
+                    "F日"
+                ],
+                "remarks": "target = データベースtblPulpAlpha_defaultの対象"
+            },
+            {
+                "order": 8,
+                "name": "明",
+                "acronym": "明",
+                "target": false,
+                "workType": "勤務",
+                "searchStr": [
+                    "NS"
+                ],
+                "remarks": "夜勤明けの人数を定義する項目",
+                "dailyNight": "None",
+                "staffsOnOpen": "None",
+                "staffsOnClose": "None"
+            },
+            {
+                "order": 9,
+                "name": "日勤",
+                "acronym": "日",
+                "target": false,
+                "workType": "勤務",
+                "searchStr": [
+                    "RT",
+                    "MR",
+                    "TV",
+                    "KS",
+                    "NM",
+                    "XP",
+                    "MG",
+                    "MT",
+                    "CT",
+                    "XO",
+                    "AG",
+                    "FR",
+                    "半休",
+                    "日"
+                ],
+                "remarks": "日勤に必要な人数を定義するための項目",
+                "dailyNight": "None",
+                "staffsOnOpen": "None",
+                "staffsOnClose": "None"
+            },
+            {
+                "order": 10,
+                "name": "他勤",
+                "acronym": "他",
+                "target": false,
+                "workType": "勤務",
+                "searchStr": [
+                    "他"
+                ],
+                "remarks": "日勤の通常勤務以外の人数を定義する項目",
+                "dailyNight": "None",
+                "staffsOnOpen": "None",
+                "staffsOnClose": "None"
+            },
+            {
+                "order": 11,
+                "name": "休日",
+                "acronym": "休",
+                "target": false,
+                "workType": "休日",
+                "searchStr": [
+                    "休"
+                ],
+                "remarks": "休日の人数を定義するための項目",
+                "dailyNight": "None",
+                "staffsOnOpen": "None",
+                "staffsOnClose": "None"
+            },
+            {
+                "order": 12,
+                "name": "休暇",
+                "acronym": "暇",
+                "target": false,
+                "workType": "休日",
+                "searchStr": [
+                    "暇"
+                ],
+                "remarks": "休暇の人数を定義するための項目",
+                "dailyNight": "None",
+                "staffsOnOpen": "None",
+                "staffsOnClose": "None"
+            },
+            {
+                "order": 13,
+                "name": "希望",
+                "acronym": "希",
+                "target": false,
+                "dailyNight": "None",
+                "staffsOnOpen": "None",
+                "staffsOnClose": "None",
+                "workType": "休日",
+                "searchStr": [
+                    "希"
+                ],
+                "remarks": "remarks"
+            }
+        ]
+    }
 }
