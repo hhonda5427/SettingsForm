@@ -80,6 +80,9 @@ class AppConfig:
     )
     # テーブル・ボタン・説明ブロック間の余白（ピクセル）
     SECTION_SPACING = 12
+    # min_skill_count: 曜日順（日〜土）のカンマ区切り7要素
+    MIN_SKILL_COUNT_DAY_LABELS = ("日", "月", "火", "水", "木", "金", "土")
+    DEFAULT_MIN_SKILL_COUNT_PER_DAY = [3, 3, 3, 3, 3, 3, 3]
 
 
 # -----------------------------------------------------------------------------
@@ -303,6 +306,7 @@ class SettingsEditorApp(QMainWindow):
             "searchStr": self._cell_search_str,
             "isSubstituteDayoff": self._cell_is_substitute_dayoff,
             "type": self._cell_type,
+            "min_skill_count": self._cell_min_skill_count,
         }
         for col_index, key in enumerate(columns):
             value = row_data.get(key, "")
@@ -365,6 +369,18 @@ class SettingsEditorApp(QMainWindow):
             lambda *_, r=row, c=col: self._on_cell_value_changed(r, c)
         )
         self._table.setCellWidget(row, col, widget)
+
+    def _cell_min_skill_count(self, value, row, col, _key):
+        """min_skill_count 列: 曜日順（日,月,火,水,木,金,土）のカンマ区切り7整数。"""
+        if isinstance(value, list) and len(value) == 7:
+            text = ",".join(str(x) for x in value)
+        elif isinstance(value, (int, float)):
+            text = ",".join(str(int(value)) for _ in AppConfig.MIN_SKILL_COUNT_DAY_LABELS)
+        else:
+            text = str(value) if value else ",".join(str(x) for x in AppConfig.DEFAULT_MIN_SKILL_COUNT_PER_DAY)
+        item = QTableWidgetItem(text)
+        item.setToolTip("曜日順（日,月,火,水,木,金,土）でカンマ区切り。例: 3,3,3,3,3,3,3")
+        self._table.setItem(row, col, item)
 
     def _cell_default(self, value, row, col, _key):
         """その他: 通常のテキストセル。"""
@@ -432,8 +448,12 @@ class SettingsEditorApp(QMainWindow):
             if cell and cell.text().isdigit() and int(cell.text()) == row + 1:
                 self._sync_row_to_model(row)
             return
-        if column_name in ("min_skill_score", "min_skill_count"):
+        if column_name == "min_skill_score":
             if cell and self._validate_non_negative_int(cell, row, column_name):
+                self._sync_row_to_model(row)
+            return
+        if column_name == "min_skill_count":
+            if cell and self._validate_min_skill_count_list(cell, row):
                 self._sync_row_to_model(row)
             return
         if cell and self._validate_non_empty(cell):
@@ -538,7 +558,7 @@ class SettingsEditorApp(QMainWindow):
         if key == "min_skill_score":
             return 40
         if key == "min_skill_count":
-            return 3
+            return list(AppConfig.DEFAULT_MIN_SKILL_COUNT_PER_DAY)
         if key in AppConfig.NUMERIC_DEFAULT_KEYS:
             for row in self._current_data:
                 v = row.get(key)
@@ -590,6 +610,16 @@ class SettingsEditorApp(QMainWindow):
             if item:
                 return [s.strip() for s in item.text().split(",") if s.strip()]
             return None
+        if key == "min_skill_count":
+            item = self._table.item(row, col)
+            if not item:
+                return None
+            parts = [s.strip() for s in item.text().split(",")]
+            if len(parts) != 7:
+                return None
+            if not all(p.isdigit() and int(p) >= 0 for p in parts):
+                return None
+            return [int(p) for p in parts]
         if key in AppConfig.WIDGET_COLUMNS:
             widget = self._table.cellWidget(row, col)
             if widget:
@@ -625,7 +655,7 @@ class SettingsEditorApp(QMainWindow):
         return True
 
     def _validate_non_negative_int(self, cell, row, column_name):
-        """min_skill_score / min_skill_count が 0 以上の整数であることを検証する。"""
+        """min_skill_score が 0 以上の整数であることを検証する。"""
         text = cell.text().strip()
         if not text:
             QMessageBox.warning(
@@ -651,10 +681,38 @@ class SettingsEditorApp(QMainWindow):
             return False
         return True
 
+    def _validate_min_skill_count_list(self, cell, row):
+        """min_skill_count が「日,月,火,水,木,金,土」の7個の0以上整数であることを検証する。"""
+        text = cell.text().strip()
+        parts = [s.strip() for s in text.split(",")] if text else []
+        if len(parts) != 7:
+            QMessageBox.warning(
+                self, "エラー",
+                "min_skill_count は曜日順（日,月,火,水,木,金,土）で"
+                "7個の数をカンマ区切りで入力してください。",
+            )
+            self._revert_cell_to_model(row, "min_skill_count", cell)
+            return False
+        for i, p in enumerate(parts):
+            if not p.isdigit() or int(p) < 0:
+                day = AppConfig.MIN_SKILL_COUNT_DAY_LABELS[i]
+                QMessageBox.warning(
+                    self, "エラー",
+                    f"min_skill_count の{day}曜の値は 0 以上の整数にしてください。",
+                )
+                self._revert_cell_to_model(row, "min_skill_count", cell)
+                return False
+        return True
+
     def _revert_cell_to_model(self, row, column_name, cell):
         """セル表示を current_data の値に戻す。"""
-        if row < len(self._current_data):
-            cell.setText(str(self._current_data[row].get(column_name, "")))
+        if row >= len(self._current_data):
+            return
+        value = self._current_data[row].get(column_name, "")
+        if column_name == "min_skill_count" and isinstance(value, list) and len(value) == 7:
+            cell.setText(",".join(str(x) for x in value))
+        else:
+            cell.setText(str(value))
 
     def _validate_color(self, cell):
         """R,G,B 形式かつ 0–255 であることを検証する。"""

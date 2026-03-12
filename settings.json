@@ -16,7 +16,15 @@
                 "core": 1,
                 "remarks": "放射線治療:定数10人",
                 "min_skill_score": 40,
-                "min_skill_count": 1
+                "min_skill_count": [
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ]
             },
             {
                 "order": 2,
@@ -32,7 +40,15 @@
                 "regular": 0.5,
                 "core": 2,
                 "min_skill_score": 40,
-                "min_skill_count": 4
+                "min_skill_count": [
+                    0,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4
+                ]
             },
             {
                 "order": 3,
@@ -48,7 +64,15 @@
                 "regular": 0.5,
                 "core": 1,
                 "min_skill_score": 40,
-                "min_skill_count": 1
+                "min_skill_count": [
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ]
             },
             {
                 "order": 4,
@@ -64,7 +88,15 @@
                 "regular": 0.5,
                 "core": 1,
                 "min_skill_score": 40,
-                "min_skill_count": 1
+                "min_skill_count": [
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ]
             },
             {
                 "order": 5,
@@ -80,7 +112,15 @@
                 "regular": 0.5,
                 "core": 1,
                 "min_skill_score": 40,
-                "min_skill_count": 1
+                "min_skill_count": [
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ]
             },
             {
                 "order": 6,
@@ -96,7 +136,15 @@
                 "regular": 0.5,
                 "core": 2,
                 "min_skill_score": 40,
-                "min_skill_count": 2
+                "min_skill_count": [
+                    0,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2
+                ]
             },
             {
                 "order": 7,
@@ -112,7 +160,15 @@
                 "regular": 0,
                 "core": 0,
                 "min_skill_score": 40,
-                "min_skill_count": 0
+                "min_skill_count": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
             },
             {
                 "order": 8,
@@ -144,7 +200,15 @@
                 "regular": 0.5,
                 "core": 1,
                 "min_skill_score": 40,
-                "min_skill_count": 4
+                "min_skill_count": [
+                    0,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4
+                ]
             },
             {
                 "order": 10,
@@ -160,7 +224,15 @@
                 "regular": 0.4,
                 "core": 1,
                 "min_skill_score": 40,
-                "min_skill_count": 2
+                "min_skill_count": [
+                    0,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2
+                ]
             },
             {
                 "order": 11,
@@ -176,7 +248,15 @@
                 "regular": 0.7,
                 "core": 1,
                 "min_skill_score": 40,
-                "min_skill_count": 3
+                "min_skill_count": [
+                    0,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    2
+                ]
             },
             {
                 "order": 12,
