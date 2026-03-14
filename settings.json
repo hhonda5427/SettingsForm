@@ -287,8 +287,16 @@
                 "regular": 0,
                 "remarks": "",
                 "core": 0,
-                "min_skill_score": 40,
-                "min_skill_count": 0
+                "min_skill_score": 0,
+                "min_skill_count": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
             },
             {
                 "order": 14,
@@ -303,8 +311,16 @@
                 "regular": 0,
                 "remarks": "",
                 "core": 0,
-                "min_skill_score": 40,
-                "min_skill_count": 0
+                "min_skill_score": 0,
+                "min_skill_count": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
             }
         ]
     },

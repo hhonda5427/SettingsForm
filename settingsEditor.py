@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-設定エディタ - settings_new.json を編集するGUI
+設定エディタ - 設定JSONを編集するGUI
 
-images フォルダのUIを参考に、カテゴリごとの説明テキスト表示に対応。
-可読性・保守性を重視し、セクション分けとテーブル駆動で拡張しやすくしている。
+デフォルトでは settings.json を読み書き。コマンドライン引数やメニュー「開く」で
+任意のファイルを指定可能。images フォルダのUIを参考に、カテゴリごとの説明表示に対応。
 """
 import sys
 import os
@@ -27,6 +27,10 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QHBoxLayout,
     QWidget,
+    QFileDialog,
+    QMenuBar,
+    QMenu,
+    QAction,
 )
 from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt, pyqtSignal
@@ -102,18 +106,20 @@ class SettingsEditorApp(QMainWindow):
     - JSON の読み込み・保存
     """
 
-    def __init__(self):
+    def __init__(self, initial_json_path=None):
         super().__init__()
         self._data = {}
         self._dynamic_data = {}
         self._category_descriptions = {}
         self._current_data = []
         self._suppress_cell_change_event = True
+        self._json_path = self._resolve_initial_path(initial_json_path)
 
         self._build_ui()
         self._setup_table_delegate()
         self._load_data()
         self._refresh_table_and_description()
+        self._update_window_title()
 
     # -------------------------------------------------------------------------
     # UI 構築
@@ -130,11 +136,73 @@ class SettingsEditorApp(QMainWindow):
         layout.setContentsMargins(10, 10, 10, 10)
         layout.setSpacing(AppConfig.SECTION_SPACING)
 
+        self._build_menu_bar()
         layout.addWidget(self._build_category_combo())
         layout.addWidget(self._build_table())
         layout.addLayout(self._build_button_row())
         # 説明ブロックは残りスペースを占有（ストレッチ 1）
         layout.addWidget(self._build_description_block(), 1)
+
+    def _build_menu_bar(self):
+        """メニューバー（ファイル → 開く / 名前を付けて保存）を生成する。"""
+        menubar = self.menuBar()
+        file_menu = menubar.addMenu("ファイル(&F)")
+        open_act = QAction("開く(&O)...", self)
+        open_act.setShortcut("Ctrl+O")
+        open_act.triggered.connect(self._on_open_file)
+        file_menu.addAction(open_act)
+        save_as_act = QAction("名前を付けて保存(&A)...", self)
+        save_as_act.setShortcut("Ctrl+Shift+S")
+        save_as_act.triggered.connect(self._on_save_as_file)
+        file_menu.addAction(save_as_act)
+        file_menu.addSeparator()
+        quit_act = QAction("終了(&X)", self)
+        quit_act.setShortcut("Ctrl+Q")
+        quit_act.triggered.connect(self.close)
+        file_menu.addAction(quit_act)
+
+    def _on_open_file(self):
+        """「開く」: ファイルダイアログで選択したJSONを読み込む。"""
+        path, _ = QFileDialog.getOpenFileName(
+            self,
+            "設定JSONを開く",
+            os.path.dirname(self._json_path) if self._json_path else "",
+            "JSONファイル (*.json);;すべてのファイル (*)",
+        )
+        if not path:
+            return
+        self._json_path = os.path.abspath(path)
+        self._load_data()
+        self._refresh_table_and_description()
+        self._update_window_title()
+
+    def _on_save_as_file(self):
+        """「名前を付けて保存」: 別パスにJSONを保存する。"""
+        path, _ = QFileDialog.getSaveFileName(
+            self,
+            "名前を付けて保存",
+            os.path.dirname(self._json_path) if self._json_path else "",
+            "JSONファイル (*.json);;すべてのファイル (*)",
+        )
+        if not path:
+            return
+        if not path.endswith(".json"):
+            path = path + ".json"
+        self._json_path = os.path.abspath(path)
+        self._save_data()
+        self._update_window_title()
+        QMessageBox.information(self, "保存完了", f"保存しました:\n{self._json_path}")
+
+    def _update_window_title(self):
+        """ウィンドウタイトルとステータスバーに現在のファイルパスを表示する。"""
+        if self._json_path:
+            path_display = self._json_path
+            title = os.path.basename(self._json_path)
+        else:
+            path_display = "(未保存)"
+            title = "(未保存)"
+        self.setWindowTitle(f"Setting Form - {title}")
+        self.statusBar().showMessage(f"読み込み: {path_display}")
 
     def _build_category_combo(self):
         """カテゴリ選択用コンボボックスを生成する。"""
@@ -201,15 +269,21 @@ class SettingsEditorApp(QMainWindow):
     # データの読み込み・保存
     # -------------------------------------------------------------------------
 
-    def _get_json_path(self):
-        """設定JSONの絶対パスを返す。"""
+    def _resolve_initial_path(self, initial_json_path):
+        """起動時のJSONパスを決定する。引数があればその絶対パス、なければデフォルト。"""
+        if initial_json_path and initial_json_path.strip():
+            return os.path.abspath(initial_json_path.strip())
         return os.path.join(
             os.path.dirname(os.path.abspath(__file__)),
             AppConfig.JSON_FILENAME,
         )
 
+    def _get_json_path(self):
+        """現在の設定JSONの絶対パスを返す。"""
+        return self._json_path
+
     def _load_data(self):
-        """settings_new.json を読み込み、カテゴリ一覧と説明を保持する。"""
+        """現在のJSONパスからデータを読み込み、カテゴリ一覧と説明を保持する。"""
         path = self._get_json_path()
         if os.path.isfile(path):
             with open(path, "r", encoding="utf-8") as f:
@@ -231,7 +305,7 @@ class SettingsEditorApp(QMainWindow):
         self._combo_category.addItems(list(self._dynamic_data.keys()))
 
     def _save_data(self):
-        """現在の dynamic_data と説明を settings_new.json に書き出す。"""
+        """現在の dynamic_data と説明を現在のJSONパスに書き出す。"""
         path = self._get_json_path()
         out = {}
         for key in self._dynamic_data:
@@ -749,7 +823,9 @@ class SettingsEditorApp(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    window = SettingsEditorApp()
+    # 第1引数でJSONファイルパスを指定可能（省略時はデフォルトの settings.json）
+    initial_path = sys.argv[1] if len(sys.argv) >= 2 else None
+    window = SettingsEditorApp(initial_json_path=initial_path)
     window.show()
     return app.exec_()
 

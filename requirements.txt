@@ -1,1 +1,3 @@
 PyQt5>=5.15.0
+# PyInstaller の依存 altgraph が pkg_resources を参照するため、setuptools 82 未満に固定
+setuptools>=60,<82
